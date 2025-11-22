@@ -18,12 +18,13 @@
 
 const colors = require('colors');
 const dotenv = require('dotenv');
-const { copilot, runLoop } = require('./index');
+const { Loop } = require('./index');
 
 dotenv.config({ quiet: true });
 
 async function main() {
-  const { result } = await runLoop(copilot(), 'Write a short poem about the sea.', { logger });
+  const loop = new Loop('copilot');
+  const { result } = await loop.run('Write a short poem about the sea.', { logger });
   console.log(result);
 }
 

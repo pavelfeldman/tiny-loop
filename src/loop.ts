@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+import { OpenAI } from './openai';
+import { Copilot } from './copilot';
+import { Claude } from './claude';
+
 import type { Tool, ImageContent, TextContent, CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import type * as llm from './llm';
 
@@ -27,7 +31,19 @@ export type RunLoopOptions = {
   logger?: Logger;
 };
 
-export async function runLoop<T>(llm: llm.LLM, task: string, options: RunLoopOptions = {}): Promise<T> {
+export class Loop {
+  private _llm: llm.LLM;
+
+  constructor(loopName: 'openai' | 'copilot' | 'claude' = 'openai') {
+    this._llm = getLlm(loopName);
+  }
+
+  async run<T>(task: string, options: RunLoopOptions = {}): Promise<T> {
+    return runLoop<T>(this._llm, task, options);
+  }
+}
+
+async function runLoop<T>(llm: llm.LLM, task: string, options: RunLoopOptions = {}): Promise<T> {
   const taskContent = `Perform following task: ${task}. Once the task is complete, call the "report_result" tool.`;
   const allTools: Tool[] = [
     ...(options.tools ?? []),
@@ -120,6 +136,16 @@ export async function runLoop<T>(llm: llm.LLM, task: string, options: RunLoopOpt
   }
 
   throw new Error('Failed to perform step, max attempts reached');
+}
+
+function getLlm(loopName: 'openai' | 'copilot' | 'claude'): llm.LLM {
+  if (loopName === 'openai')
+    return new OpenAI();
+  if (loopName === 'copilot')
+    return new Copilot();
+  if (loopName === 'claude')
+    return new Claude();
+  throw new Error(`Unknown loop LLM: ${loopName}`);
 }
 
 const defaultResultSchema: Tool['inputSchema'] = {

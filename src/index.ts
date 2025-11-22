@@ -14,21 +14,5 @@
  * limitations under the License.
  */
 
-import { Claude } from './claude';
-import { OpenAI } from './openai';
-import { Copilot } from './copilot';
-
 export * from './llm';
 export * from './loop';
-
-export function openai() {
-  return new OpenAI();
-}
-
-export function copilot() {
-  return new Copilot();
-}
-
-export function claude() {
-  return new Claude();
-}
