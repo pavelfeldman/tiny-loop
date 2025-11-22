@@ -19,7 +19,6 @@ import { OpenAI } from './openai';
 import { Copilot } from './copilot';
 
 export * from './llm';
-export * from './agent';
 export * from './loop';
 
 export function openai() {
