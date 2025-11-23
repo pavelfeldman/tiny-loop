@@ -20,4 +20,4 @@ jobs:
     - name: Lint
       run: npm run lint
     - name: Run tests
-      run: npm run ctest
+      run: npm run test
