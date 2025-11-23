@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import { OpenAI } from './providers/openai';
-import { Copilot } from './providers/copilot';
-import { Claude } from './providers/claude';
+import { getProvider } from './providers/registry';
 import { CachingProvider } from './cache';
 import { prune } from './prune';
 
@@ -145,16 +143,6 @@ async function runLoop<T>(provider: types.Provider, task: string, options: RunLo
   }
 
   throw new Error('Failed to perform step, max attempts reached');
-}
-
-function getProvider(loopName: 'openai' | 'copilot' | 'claude'): types.Provider {
-  if (loopName === 'openai')
-    return new OpenAI();
-  if (loopName === 'copilot')
-    return new Copilot();
-  if (loopName === 'claude')
-    return new Claude();
-  throw new Error(`Unknown loop LLM: ${loopName}`);
 }
 
 const defaultResultSchema: types.Schema = {
