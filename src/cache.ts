@@ -17,27 +17,40 @@
 import crypto from 'crypto';
 import * as types from './types';
 
-export function cachedComplete(provider: types.Provider, caches: types.ReplayCaches): types.Provider['complete'] {
+export function cachedComplete(provider: types.Provider, caches: types.ReplayCaches, secrets: Record<string, string>): types.Provider['complete'] {
   return async (conversation: types.Conversation) => {
-    const key = conversationHash(conversation);
+    const c = hideSecrets(conversation, secrets);
+    const key = calculateSha1(JSON.stringify(c));
+
     if (caches.before[key]) {
       caches.after[key] = caches.before[key];
-      return caches.before[key] ?? caches.after[key];
+      return unhideSecrets(caches.before[key] ?? caches.after[key], secrets);
     }
     if (caches.after[key])
-      return caches.after[key];
+      return unhideSecrets(caches.after[key], secrets);
     const result = await provider.complete(conversation);
-    caches.after[key] = result;
+    caches.after[key] = hideSecrets(result, secrets);
     return result;
   };
 }
 
-function conversationHash(conversation: types.Conversation): string {
-  return calculateSha1(JSON.stringify(conversation));
+type Reply = { result: types.AssistantMessage, usage: types.Usage };
+
+function hideSecrets<T>(conversation: T, secrets: Record<string, string>): T {
+  let text = JSON.stringify(conversation);
+  for (const [key, value] of Object.entries(secrets))
+    text = text.replaceAll(value, `<${key}>`);
+  return JSON.parse(text);
+}
+
+function unhideSecrets(message: Reply, secrets: Record<string, string>): Reply {
+  let text = JSON.stringify(message);
+  for (const [key, value] of Object.entries(secrets))
+    text = text.replaceAll(`<${key}>`, value);
+  return JSON.parse(text);
 }
 
 function calculateSha1(text: string): string {
-  text = text.replace(/localhost:\d+/g, 'localhost:PORT');
   const hash = crypto.createHash('sha1');
   hash.update(text);
   return hash.digest('hex');

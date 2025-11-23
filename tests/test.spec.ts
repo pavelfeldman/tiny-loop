@@ -65,7 +65,8 @@ test('tool call', async ({ loop }) => {
   expect(result).toEqual({ sum: 5 });
 });
 
-test('tool call - image reply', async ({ loop }) => {
+test('tool call - image reply', async ({ loop, provider }) => {
+  test.fail(provider === 'openai', 'OpenAI does not do well with image tool results by default');
   const tools: types.Tool[] = [
     {
       name: 'capture_image',
@@ -85,7 +86,7 @@ test('tool call - image reply', async ({ loop }) => {
   const resultSchema: types.Schema = {
     type: 'object',
     properties: {
-      result: { type: 'number', description: 'The sum of the two numbers' },
+      result: { type: 'number', description: 'Number that you see in the image' },
     },
     required: ['result'],
   };

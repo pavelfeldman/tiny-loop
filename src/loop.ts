@@ -32,9 +32,9 @@ export class Loop {
   private _provider: types.Provider;
   private _complete: types.Provider['complete'];
 
-  constructor(loopName: 'openai' | 'copilot' | 'claude', options?: { caches?: types.ReplayCaches }) {
+  constructor(loopName: 'openai' | 'copilot' | 'claude', options?: { caches?: types.ReplayCaches, secrets?: Record<string, string> }) {
     this._provider = getProvider(loopName);
-    this._complete = options?.caches ? cachedComplete(this._provider, options.caches) : this._provider.complete.bind(this._provider);
+    this._complete = options?.caches ? cachedComplete(this._provider, options.caches, options.secrets ?? {}) : this._provider.complete.bind(this._provider);
   }
 
   async run<T>(task: string, options: RunLoopOptions = {}): Promise<T> {

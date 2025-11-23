@@ -35,7 +35,9 @@ test('integration', async ({ loop, server }, testInfo) => {
   const callTool: types.ToolCallback = async params => {
     return await client.callTool({ name: params.name, arguments: params.arguments }) as types.ToolResult;
   };
-  const result = await loop.run<{ result: string }>(`Navigate to ${server.PREFIX} via Playwright MCP and tell me what is on that page`, {
+  const result = await loop.run<{ result: string }>(
+    `Navigate to ${server.PREFIX} via Playwright MCP and tell me what is on that page.
+     Use snapshot in the navigation result, do not take snapshots or screenshots.`, {
     tools,
     callTool,
   });

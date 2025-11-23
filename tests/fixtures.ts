@@ -35,12 +35,13 @@ type TestFixtures = {
 };
 
 type WorkerFixtures = {
+  _workerPort: number;
   _workerServer: TestServer;
 };
 
 export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>({
   provider: ['copilot', { option: true }],
-  loop: async ({ provider }, use) => {
+  loop: async ({ provider, _workerPort }, use) => {
     const cacheFile = path.join(__dirname, '__cache__', provider, sanitizeFileName(test.info().titlePath.join(' ')) + '.json');
     const dataBefore = await fs.promises.readFile(cacheFile, 'utf-8').catch(() => '{}');
     let cache: types.ReplayCache = {};
@@ -50,7 +51,7 @@ export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>(
       cache = {};
     }
     const caches: types.ReplayCaches = { before: cache, after: {} };
-    await use(new Loop(provider, { caches }));
+    await use(new Loop(provider, { caches, secrets: { PORT: String(_workerPort) } }));
     const dataAfter = JSON.stringify(caches.after, null, 2);
     if (dataBefore !== dataAfter) {
       await fs.promises.mkdir(path.dirname(cacheFile), { recursive: true });
@@ -58,9 +59,13 @@ export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>(
     }
   },
 
-  _workerServer: [async ({ }, use, workerInfo) => {
+  _workerPort: [async ({ }, use, workerInfo) => {
     const port = 8907 + workerInfo.workerIndex * 2;
-    const server = await TestServer.create(port);
+    await use(port);
+  }, { scope: 'worker' }],
+
+  _workerServer: [async ({ _workerPort }, use) => {
+    const server = await TestServer.create(_workerPort);
     await use(server);
     await server.stop();
   }, { scope: 'worker' }],

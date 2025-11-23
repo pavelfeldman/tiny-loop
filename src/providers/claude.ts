@@ -18,7 +18,7 @@ import type Anthropic from '@anthropic-ai/sdk';
 import type { Provider } from '../types';
 import type * as types from '../types';
 
-const model = 'claude-sonnet-4-20250514';
+const model = 'claude-sonnet-4-5';
 
 export class Claude implements Provider {
   readonly name = 'claude';
@@ -167,6 +167,8 @@ function toClaudeMessages(messages: types.Message[]): Anthropic.Messages.Message
 }
 
 const systemPrompt = `
+- Make sure every message contains a tool call.
 - When you use a tool, you may provide a brief thought or explanation in the content field
   immediately before the tool_call. Do not split this into separate messages.
+- Every reply must include a tool call.
 `;

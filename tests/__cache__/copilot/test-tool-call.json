@@ -2,7 +2,7 @@
   "211e9fe13a6804d333f83ea1923b682b215c77db": {
     "result": {
       "role": "assistant",
-      "content": "Adding 2 and 3 as requested by the user",
+      "content": "Add 2 and 3 together",
       "toolCalls": [
         {
           "name": "add",
@@ -10,16 +10,16 @@
             "a": 2,
             "b": 3
           },
-          "id": "toolu_vrtx_011BEsd7k8wp3fvFBd6ko4ZF"
+          "id": "toolu_vrtx_01CWAka3pvToEgYddEDgmCDq"
         }
       ]
     },
     "usage": {
       "input": 791,
-      "output": 97
+      "output": 93
     }
   },
-  "cac4baf0d38693feac029f47685e36064b80c5e7": {
+  "1ded61848938010c365a716a8dd5f8c2e722d8f5": {
     "result": {
       "role": "assistant",
       "content": "",
@@ -29,12 +29,12 @@
           "arguments": {
             "sum": 5
           },
-          "id": "toolu_vrtx_01Lqv3ecbcLLUC4FxeAjYSAo"
+          "id": "toolu_vrtx_01XuhVR8kvHDmGzpQNK9aenc"
         }
       ]
     },
     "usage": {
-      "input": 889,
+      "input": 885,
       "output": 53
     }
   }
