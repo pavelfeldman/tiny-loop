@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "ES2023",
     "module": "commonjs",
-    "lib": ["esnext"],
+    "lib": ["ES2023"],
     "esModuleInterop": true,
     "strict": true,
     "allowJs": false,

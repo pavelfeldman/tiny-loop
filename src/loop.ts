@@ -31,10 +31,12 @@ export type RunLoopOptions = {
 export class Loop {
   private _provider: types.Provider;
   private _complete: types.Provider['complete'];
+  private _logger: types.Logger | undefined;
 
-  constructor(loopName: 'openai' | 'copilot' | 'claude', options?: { caches?: types.ReplayCaches, secrets?: Record<string, string> }) {
+  constructor(loopName: 'openai' | 'copilot' | 'claude', options?: { caches?: types.ReplayCaches, secrets?: Record<string, string>, logger?: types.Logger }) {
     this._provider = getProvider(loopName);
     this._complete = options?.caches ? cachedComplete(this._provider, options.caches, options.secrets ?? {}) : this._provider.complete.bind(this._provider);
+    this._logger = options?.logger;
   }
 
   async run<T>(task: string, options: RunLoopOptions = {}): Promise<T> {
@@ -58,7 +60,7 @@ export class Loop {
       tools: allTools,
     };
 
-    const log = options.logger || (() => {});
+    const log = options.logger ?? this._logger ?? (() => {});
     log('loop:loop', `Starting ${this._provider.name} loop`, task);
     const maxTurns = options.maxTurns || 100;
     for (let iteration = 0; iteration < maxTurns; ++iteration) {

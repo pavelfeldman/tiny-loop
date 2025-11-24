@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export * from './lib/index';
+export * from './lib/loop.js';
