@@ -23,19 +23,9 @@ const model = 'claude-sonnet-4-5';
 export class Claude implements Provider {
   readonly name = 'claude';
   readonly systemPrompt = systemPrompt;
-  private _anthropic: Anthropic | undefined;
-
-  async anthropic(): Promise<Anthropic> {
-    if (!this._anthropic) {
-      const anthropic = await import('@anthropic-ai/sdk');
-      this._anthropic = new anthropic.Anthropic() as unknown as Anthropic;
-    }
-    return this._anthropic;
-  }
 
   async complete(conversation: types.Conversation) {
-    const anthropic = await this.anthropic();
-    const response = await anthropic.messages.create({
+    const response = await create({
       model,
       max_tokens: 10000,
       messages: toClaudeMessages(conversation.messages),
@@ -55,6 +45,25 @@ export class Claude implements Provider {
     };
     return { result, usage };
   }
+}
+
+async function create(body: Anthropic.Messages.MessageCreateParamsNonStreaming): Promise<Anthropic.Messages.Message> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'x-api-key': process.env.ANTHROPIC_API_KEY!,
+    'anthropic-version': '2023-06-01',
+  };
+
+  const response = await fetch(`https://api.anthropic.com/v1/messages`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok)
+    throw new Error(`API error: ${response.status} ${response.statusText} ${await response.text()}`);
+
+  return await response.json() as Anthropic.Messages.Message;
 }
 
 function toClaudeTool(tool: types.Tool): Anthropic.Messages.Tool {
@@ -78,7 +87,6 @@ function toClaudeContentPart(part: types.ContentPart): Anthropic.Messages.Conten
     return {
       type: 'text',
       text: part.text,
-      citations: [],
     };
   }
   if (part.type === 'image') {
@@ -87,7 +95,7 @@ function toClaudeContentPart(part: types.ContentPart): Anthropic.Messages.Conten
       source: {
         type: 'base64',
         data: part.data,
-        media_type: part.mimeType as 'image/png' | 'image/jpeg' | 'image/gif'
+        media_type: part.mimeType as 'image/png' | 'image/jpeg' | 'image/gif' | 'image/webp'
       },
     };
   }

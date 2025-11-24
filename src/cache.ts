@@ -22,11 +22,11 @@ export function cachedComplete(provider: types.Provider, caches: types.ReplayCac
     const c = hideSecrets(conversation, secrets);
     const key = calculateSha1(JSON.stringify(c));
 
-    if (caches.before[key]) {
+    if (!process.env.NOCACHE && caches.before[key]) {
       caches.after[key] = caches.before[key];
       return unhideSecrets(caches.before[key] ?? caches.after[key], secrets);
     }
-    if (caches.after[key])
+    if (!process.env.NOCACHE && caches.after[key])
       return unhideSecrets(caches.after[key], secrets);
     const result = await provider.complete(conversation);
     caches.after[key] = hideSecrets(result, secrets);
