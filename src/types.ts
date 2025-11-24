@@ -22,7 +22,7 @@ export type Schema = {
 
 export type Tool = {
   name: string;
-  description: string;
+  description?: string;
   inputSchema: Schema;
 };
 
@@ -70,7 +70,7 @@ export type TextContentPart = {
 export type ImageContentPart = {
   type: 'image';
   data: string;
-  mimeType: 'image/png' | 'image/jpeg' | 'image/gif';
+  mimeType: string;
 };
 
 export type ContentPart = TextContentPart | ImageContentPart;

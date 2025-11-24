@@ -87,7 +87,7 @@ function toClaudeContentPart(part: types.ContentPart): Anthropic.Messages.Conten
       source: {
         type: 'base64',
         data: part.data,
-        media_type: part.mimeType
+        media_type: part.mimeType as 'image/png' | 'image/jpeg' | 'image/gif'
       },
     };
   }

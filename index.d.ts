@@ -15,3 +15,4 @@
  */
 
 export * from './lib/loop';
+export * from './lib/types';
