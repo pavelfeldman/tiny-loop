@@ -6,7 +6,7 @@
         {
           "type": "text",
           "text": "I need to capture an image to identify the number in it.",
-          "thoughtSignature": "Cu4EAdHtim9i1QlsFqJCjczKiTdoNVk6FR1+h0pf2HGuRAXVUGpkAap0Np5PYfeRGRcKsTgI6rLXVW1yl6XUZJ9uQHb/qQvsOeNe7BVnvbyBvDN43dguUQza8wHxcprkSOeTHja+AxgjZilBXZSJnIDoPgc+ekvSIGC7zBZVzx6McA2BdDs2YNy1BDTyYIvVbpDcI16e4ny4RQt0HtcSkEYXTTX3n3Eun3WY7JIJ9tjsURMZfQLRsLKPf3omoptcEydHIMRhLv4Xi0PLjJXR7UDoFJGvQezyNkqS/ELfVSNTjyDl5f9bzGsTDYXVfyMFJDOMcD3H/u0JtVgx08pmjCWDjR1uu2Z0lbEUSITPKNlvkfYXDlndIa3c7CeYJ+/PpVO6n/oPeyqHVkn4C3+pZvQSt6bVHIjm+dqqZLgPY+RUeyTQ3QQ2yKFZuggKZIGXV6QMiMG4ODEvim74u/8c8CXXR8m5oK/ta0hv/SpzeWgLxSc769yUtGiLmD/kM6ABuRfu/kbnF6v1p5eEWb1ba6hKNv3G6f6OJ4BXLqn9+KyKP2wrw6VZ1v+OhF7X2UA0yC/kB/NFQaYV4wL5fL/BL5GjKLCaQXzMvp5DQHfnTW4EPPV4G1tnghXtsxQaOsaMOZWO8+fdhW6KYid2foEBIPTWBeB6CWuvG7NpCbX3kMcPDnFc1uy3n37pm+vfhrZgE4RYIvSKnoBrr8y3nPiNCXtDsiFBcq5vipB21C0Ijzjt03EH03kzXQE1RvYrqo977dnGsJzgZ+4TOZ2mCx3+jxupq9EC0wEsn75NCgckF2p8eRYv0cIrkcLhX60CcYvrPw=="
+          "geminiThoughtSignature": "Cu4EAdHtim9i1QlsFqJCjczKiTdoNVk6FR1+h0pf2HGuRAXVUGpkAap0Np5PYfeRGRcKsTgI6rLXVW1yl6XUZJ9uQHb/qQvsOeNe7BVnvbyBvDN43dguUQza8wHxcprkSOeTHja+AxgjZilBXZSJnIDoPgc+ekvSIGC7zBZVzx6McA2BdDs2YNy1BDTyYIvVbpDcI16e4ny4RQt0HtcSkEYXTTX3n3Eun3WY7JIJ9tjsURMZfQLRsLKPf3omoptcEydHIMRhLv4Xi0PLjJXR7UDoFJGvQezyNkqS/ELfVSNTjyDl5f9bzGsTDYXVfyMFJDOMcD3H/u0JtVgx08pmjCWDjR1uu2Z0lbEUSITPKNlvkfYXDlndIa3c7CeYJ+/PpVO6n/oPeyqHVkn4C3+pZvQSt6bVHIjm+dqqZLgPY+RUeyTQ3QQ2yKFZuggKZIGXV6QMiMG4ODEvim74u/8c8CXXR8m5oK/ta0hv/SpzeWgLxSc769yUtGiLmD/kM6ABuRfu/kbnF6v1p5eEWb1ba6hKNv3G6f6OJ4BXLqn9+KyKP2wrw6VZ1v+OhF7X2UA0yC/kB/NFQaYV4wL5fL/BL5GjKLCaQXzMvp5DQHfnTW4EPPV4G1tnghXtsxQaOsaMOZWO8+fdhW6KYid2foEBIPTWBeB6CWuvG7NpCbX3kMcPDnFc1uy3n37pm+vfhrZgE4RYIvSKnoBrr8y3nPiNCXtDsiFBcq5vipB21C0Ijzjt03EH03kzXQE1RvYrqo977dnGsJzgZ+4TOZ2mCx3+jxupq9EC0wEsn75NCgckF2p8eRYv0cIrkcLhX60CcYvrPw=="
         },
         {
           "type": "tool_call",
@@ -21,14 +21,14 @@
       "output": 23
     }
   },
-  "8aabd8753940e046cb55a83fec7dc07bed3a7bcb": {
+  "85189038d3cf718f7039147d73283d6411029458": {
     "result": {
       "role": "assistant",
       "content": [
         {
           "type": "text",
-          "text": "I see the number 42.",
-          "thoughtSignature": "CqoLAdHtim+FJQ2iwFlT/j/5+YUtVV5MRLz2IiWYaIG7oDnP+AHF72GFQL9rdP2TbyOX9D2DPRVIl36q1GkMDhpiiZnHlEKIcoGteoXi2qZENEdbUHeAQt2smdnH6DPgzzWMIBzXlUNoeYosHVs5y+7MBz9ARAgdok0ET4Gal1d1yFJQarrfPwTMRz3CGZcFEqRgi/L5QSgRpbt87QlXQ0GIT42OEqajiDaixo/kxTYoinMGoh8g6vl8oUNAvVWyk3KLzoMN3769gGmteKe7HkhJSGxO/ZTUvnJfBHUZo+ipGoXvrvEUf8K10wHstpDoy+rulGgP1VGjkYVJXrDZVBmYRV89kywTbg9v590jSnAQ1w+qrJwacdVIp/ZJZFC9lF+/ml00OYQi7UnLxtX1FZ3NS+wMfnI+Fm/bpG+BrffBwK6ydXULmy8HfCbsVh+Od0pZbrmckwFvDgpak0Y+qhTURZ8eaqyBbFWzEuWuiZMP7flppFPXMvoYOVvKK0t4wZ6JApZxMakQ03oWXwTe6jmN5sDOi2CV44kYMzA8uMj+L5KmLfyxnHTNPC0y2gmVS9+s7yUR+PbnPznywgY4vp6V5aMRNbQk2hkhVhJpQDdGV0vLXOwwF7l4m4VFVCSeoW7Fz4FFUrF6oa4wR9KobaETi4JOrbFK6nnMhT05VqmVAeAMMJD7pOxHvz0mPwP2DflcyIPtife+fJdg9Y0JDIR/fLufOsesrGFmz+u+cAtNLYiVu4ddJR+qEhYMuYWDz/Dmp5+PtVWkO3hYIYuIoRKLcWK70y7FKMLHc2NCsTg2YylJ6znn5LpMUmINhvnpGg9iqity5CM/5qBN+fqgyaYz2VFrZOCk2TDKRendqNqTNvl9FbikP+xN4OhkPOCwEUsWCHlyxybCQJiz1vo+fk6qBfOsnJHaKd5YKWSicId3TGQaSo4r9Z8OAIC7Ro+XNZmExyPew5+h7NDm/nT8haCesRxVCGlPKsDSXdr3PtCxDfMbijDSAidvxi6BbFEesXAR2KWCA2Jcy+aqgISZfHaws16XTail+1UJJnKXKDuVJB7/CeLUyt7QD0hNTV9rb6emDeM4bCD0A/IdqFnIgN4IquTktOJ0KtSrjwkwoA2LgdgybvYNb/fl4R6onjOy3zl+In6V0Owk15jxrgj3BEzsbiCABH74s2DCYr++61eFmNV49BlQhfv99S78CKXhWKVR16qDprjRMQRUSVTXzI9rThOCUd7YyLTieBeslTJgRMYgl3Qtj3p/u8Li7BKvHdj+tgKlNxvQkysPhQqQVL3e85W1OG/VvoL8xk9pbdBnFp6Tnuf59ie30LQmswD0hw/V2ebngWKW825iJMJWScqRmGOiNv8kPIE3j6qeA9yD0hJard6ayS9Fvy5EcxiLKb5WXnYk3s9GSu7Rskg4gCbofwGmTmyJoD0wQMhIdXI/KUP6sLlXVdPKSpX9Qa0ayUQD2csoFyJ7f9xJqZ7iSCdwdhWI+yE74H7ppkkr7kp8rRHvxgjqzqIxPeVzXzNbaTvOraCx2dpFKNMm9RIgHjdyFaXynibPNFF98Mq4vJQHGMS8Zm2VaiAz/4Rp1t0kbnqz33R2UM0qxuqZ5j3KPGgO7C7z0lJbY4XKGKlJEe70stZZIuQkIAdHBYnrQ/A/3vuWOopYZBXXBpWvMz2g5xYaJNqeMyXWYrZT5ejbuIceOHEZhira99FlnNghWVkPFhnURYss3ANasAxbNIVmUjQza/YNrRToanY9bD7MwZxeolTsVRUhW+g8ZyPfsUuW+4HR1zngYqAYXqVe6UO+HhL2CtQENj0IZmyi1+ZHDPFv7qsBE2bDl1/CLwi9liJcm+4Pv+a1GS7AjXR8waawh3wm7ou2p1h0RkvD5DeLYIADbSM82KJo5r9JGHtTzsK2p1CiZ3/VF/qx6C00hg=="
+          "text": "I see the number 42 in the image.",
+          "geminiThoughtSignature": "CusCAdHtim8BtWy2lK2iiRGAReFUBUl+KLYMl0adcGyBhbr42zLNC0x/ljjdwZv+PJp7Dpxhmk70Z2tFmlxQu6m7Tm2vz81W0xscFIUaWkPDGkn17E7qfjxFfZfy1gzUSTkPJAy1lDph3lR+zCTImRHYhSbDIT7QmffjhkgYvlO250WiXzmwizzriZWYnDUIAhEwyPAh+E0eskj+ExfuJj+Xh1Q3FzdZ/La4Th4Snzn1l9wioxH/wvw7Av7h+Df/P+ehEwZKIG9TaJXyvHfH6nqP4Ibp5cErwOmpRZulYFVkOhXyU/DvzhzD0uiv4qYF+EiF+nG/VG0512MT8LHhTkAi2W3Rbib1yZZmITlQmnuFH4E1s8DE1ek5tVe/ktvrt+JlrM7MdQI2CGM/i3qsQjNB9fw+vdHePxcaIbXtZocMhPwGcjUwd1CC+Fw0kqEizpivhGkklwMrubxkSZZoUy/+20ePWuSGVPaOYQO3"
         },
         {
           "type": "tool_call",
@@ -36,13 +36,13 @@
           "arguments": {
             "result": 42
           },
-          "id": "call_0hobkr5cygbu"
+          "id": "call_9xk2soocik"
         }
       ]
     },
     "usage": {
       "input": 457,
-      "output": 24
+      "output": 27
     }
   }
 }

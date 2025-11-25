@@ -4,23 +4,28 @@
       "role": "assistant",
       "content": [
         {
+          "type": "thinking",
+          "thinking": "The user wants me to capture an image and tell them what number I see on it. I need to:\n1. First capture the image using the capture_image function\n2. Then report the result using the report_result function with the number I see\n\nLet me start by capturing the image.",
+          "signature": "ErMDCkYIChgCKkAQiSWRdsDok/VC/ojC9LYNDtIyi3LIftRwesLZFqotcTzlawlgxJwWLJXYReRk20rNmaQYT4nB9ZXLlXBci+oAEgyqYlsbQgzwWmjpiC4aDDcmg8sC2XKRVaxxMiIwU9vsoxr7x6UgjTb+/JsZsvBEnO58rKXrKQkm2Vrujzny5qEZqlrwLjEdorXqPCsBKpoCqlcvkuVuxPTwQzPlMt7RYV+B1iAlKIpW+WBTfXDT5tkEx+HPxoVK8fJAaNeeEBoajvKaCXO3UG1HXN5uLGQdpIIvuX0OOscFIUQo8dBuMLHY33jGyTVjIFDSdvKvSdBK+7AcDktfFjLREMioa9aksipsGNNVo0PT7PcZqsQxGawB47GrFGheR61P3Pp+oLfsfEFNkwQtWVbz2DMWLUGxXbNmv0ApKm9K+3kltU3We0XkKAqWuY3xZ2dK/nki/LJI1WRPtttd7ER+WDvo7AceKIeNvVDeL4CDpbgBuhUE9zbH0vW4XUnDs1HV9LQzI3PnIqz9OCN4NhnCW4I3fxWH5X41NZqSfHf3D/E/pQhQTGepT2rGrucfJEQ4GAE="
+        },
+        {
           "type": "text",
-          "text": "I'll capture the image and identify the number on it."
+          "text": "I'll capture the image for you and identify the number displayed on it."
         },
         {
           "type": "tool_call",
           "name": "capture_image",
           "arguments": {},
-          "id": "toolu_01SzDYu84TTQekpUFCV2Gb2Y"
+          "id": "toolu_012qFibt4ps9PnWsMyD73WGK"
         }
       ]
     },
     "usage": {
-      "input": 702,
-      "output": 49
+      "input": 732,
+      "output": 122
     }
   },
-  "d280c6364166c463cab770016a1d7fd2106d2fad": {
+  "bbdb1a7f963d667e60974c9631629be54f6c471b": {
     "result": {
       "role": "assistant",
       "content": [
@@ -34,12 +39,12 @@
           "arguments": {
             "result": 42
           },
-          "id": "toolu_01YcPqxt9vqsPyX18qiCvD3v"
+          "id": "toolu_01H1krPmzoT4UdJHv7nbksXk"
         }
       ]
     },
     "usage": {
-      "input": 2341,
+      "input": 2444,
       "output": 74
     }
   }

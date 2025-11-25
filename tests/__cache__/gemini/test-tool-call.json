@@ -6,7 +6,7 @@
         {
           "type": "text",
           "text": "I need to add 2 and 3. The `add` tool can be used for this.",
-          "thoughtSignature": "CqUCAdHtim+z1PSA7zx8RoRqXsVhCnmj/pvTw+ut+JEEXPRityylL2VrxqAEENR7FE676MlAHLw7iCwjp07jwlgRs5JXx80N2SDEV+cAgAEIgWiQAS1H9dh5i0TmiyZQv5/cPYFSXrgr14oSXE6CqRTClcaQWE1VJcLtpSfE5MljNjNF+exZiNxYYpzrEa7HkHHkphmUuFppT6xf7izMI6H/cayhqObar3XnB14vuJV4OS45jiEVcXrJYERm0t3pvf7lWI6GWC1Pcbj/gzXd+vaKGZKiHTOH2zVgebVfZJ+q6FX03j8WXhs36bEFebpzP87eirnCLYcPU9KPuuHHpf9cWXo4/2NrpnVX7Eqge1smeJOqB8zS3o9z5VaOsP2CDmLZ5Z5LPa8="
+          "geminiThoughtSignature": "CqUCAdHtim+z1PSA7zx8RoRqXsVhCnmj/pvTw+ut+JEEXPRityylL2VrxqAEENR7FE676MlAHLw7iCwjp07jwlgRs5JXx80N2SDEV+cAgAEIgWiQAS1H9dh5i0TmiyZQv5/cPYFSXrgr14oSXE6CqRTClcaQWE1VJcLtpSfE5MljNjNF+exZiNxYYpzrEa7HkHHkphmUuFppT6xf7izMI6H/cayhqObar3XnB14vuJV4OS45jiEVcXrJYERm0t3pvf7lWI6GWC1Pcbj/gzXd+vaKGZKiHTOH2zVgebVfZJ+q6FX03j8WXhs36bEFebpzP87eirnCLYcPU9KPuuHHpf9cWXo4/2NrpnVX7Eqge1smeJOqB8zS3o9z5VaOsP2CDmLZ5Z5LPa8="
         },
         {
           "type": "tool_call",
@@ -24,14 +24,14 @@
       "output": 39
     }
   },
-  "51428929346a3fa40a3970f6bac629be46e759a8": {
+  "a767d02c7c9a8dc4f71169a035ea3b6771bd31df": {
     "result": {
       "role": "assistant",
       "content": [
         {
           "type": "text",
-          "text": "I have the sum of 2 and 3, which is 5. Now I will report this result.",
-          "thoughtSignature": "Cs8CAdHtim/gFc0su3p8SieillHsoM63sXYMzJ0GigqQ4slkQJK1CUn9mEaNca1NoLvk5yvJusnTcoOBzbH8xFPHNP0xyXwq9zuOzWfJIu3HfBGhZafJaNLpEvCiKJ3ySLrZNFUDdY7OMOCUkkMApvQ+3xvmdx30/2XSMhvSOzDHdAmpiwhKp9vq/bhf6zLLcnCNt4PaPhOavmH0VwdtFNOhvu2VL9Ovc4x/TGan1uPlmYrXtv4kVAxo9rPV2M7Odii8DY99Gm7rAjc3oqtK0E9v8RDyFqu5s123z6fdkT4nJGCymbYGKC9ZPl5viPaYZkZTn8kL8cD2U7TsvV6pUBGRqPUPxA4Fgg1NEAFstnLFYT05WDuKXPkrnDtE3V0xeoMrOrfdJ14nqzaazLSQrc9IjS2UAuZNd9GHCucG5TXBZ1UN3BcnSBLfIuVprnPAWOk="
+          "text": "The sum of 2 and 3 is 5. I will report this result.",
+          "geminiThoughtSignature": "CsIDAdHtim9fcDLjKU/hYR2Z/5i2kcEAmmmr091Z+DQBF67M8p8pYzqZYotwK6mHXew446gu70QNwWk4EGHDPk5If31LhHKc4/eLD/r0r3PvykVOyEr47s63Z7M9CwYFnZITaqP+59vcPxXL8TTCg81y8ISBNRAR27UhK+1WyFMlnTBAHFMuWPjWnPd7rByvbJYCalcOBeIh/P09StIK+P5zI4Fqc4amZxw3K8XSVjBCn0GX1/67tKq/K4SjGdccd+l+6pfxCNFey1DLoIQ5WsDsncEqEoCNqW+wp51Azq2F5TrHd9m9tiasPFJ7q/Byfu4+lHfFYi+YchnTfuW/njXEPg9LA6kWuqaSyhzFN/Hn+vf/PrjtBctqgWaohNGtVbhNiM39SVmcvZclCSRJ4vJfSiv/T2zPeHtK9CasqLIJnB9e+eU+GMHTW3Wi4ujeb8/z88FNztDLkIB66Xu2u9/K4jp3KWUMgdvvFAEJl1C5CMirnJOiKCixmIDdS+h9yKwReSzxE8+9QKfvUuTjP8rP6NFaqD3lQR0ON05OPwEZq9Diz6q6mcgRovZkYTZGRbhX4RqoDCPIIf++kSM63yhbakh4"
         },
         {
           "type": "tool_call",
@@ -39,13 +39,13 @@
           "arguments": {
             "sum": 5
           },
-          "id": "call_41p8uw7egp8"
+          "id": "call_e10ugbvcoge"
         }
       ]
     },
     "usage": {
       "input": 250,
-      "output": 38
+      "output": 33
     }
   }
 }

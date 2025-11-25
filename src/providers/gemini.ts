@@ -99,7 +99,7 @@ function toContentPart(part: gemini.Part & { thoughtSignature?: string }): types
     return {
       type: 'text',
       text: part.text,
-      thoughtSignature: part.thoughtSignature,
+      geminiThoughtSignature: part.thoughtSignature,
     };
   }
 
@@ -109,7 +109,7 @@ function toContentPart(part: gemini.Part & { thoughtSignature?: string }): types
       name: part.functionCall.name,
       arguments: part.functionCall.args,
       id: `call_${Math.random().toString(36).substring(2, 15)}`,
-      thoughtSignature: part.thoughtSignature,
+      geminiThoughtSignature: part.thoughtSignature,
     };
   }
 
@@ -131,17 +131,20 @@ function toGeminiContent(message: types.Message): gemini.Content[] {
       if (part.type === 'text') {
         parts.push({
           text: part.text,
-          thoughtSignature: part.thoughtSignature,
+          thoughtSignature: part.geminiThoughtSignature,
         });
         continue;
       }
-      parts.push({
-        functionCall: {
-          name: part.name,
-          args: part.arguments
-        },
-        thoughtSignature: part.thoughtSignature,
-      });
+
+      if (part.type === 'tool_call') {
+        parts.push({
+          functionCall: {
+            name: part.name,
+            args: part.arguments
+          },
+          thoughtSignature: part.geminiThoughtSignature,
+        });
+      }
     }
 
     return [{

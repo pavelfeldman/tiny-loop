@@ -26,9 +26,13 @@ export class Claude implements types.Provider {
   async complete(conversation: types.Conversation) {
     const response = await create({
       model,
-      max_tokens: 10000,
+      max_tokens: 32768,
       messages: conversation.messages.map(toClaudeMessagePart),
       tools: conversation.tools.map(toClaudeTool),
+      thinking: {
+        type: 'enabled',
+        budget_tokens: 1024,
+      }
     });
     const result = toAssistantMessage(response);
     const usage: types.Usage = {
@@ -58,13 +62,14 @@ async function create(body: Anthropic.Messages.MessageCreateParamsNonStreaming):
   return await response.json() as Anthropic.Messages.Message;
 }
 
-function toContentPart(block: Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCallPart | null {
+function toContentPart(block: Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCallPart | types.ThinkingContentPart | null {
   if (block.type === 'text') {
     return {
       type: 'text',
       text: block.text,
     };
   }
+
   if (block.type === 'tool_use') {
     return {
       type: 'tool_call',
@@ -73,10 +78,19 @@ function toContentPart(block: Anthropic.Messages.ContentBlock): types.TextConten
       id: block.id,
     };
   }
+
+  if (block.type === 'thinking') {
+    return {
+      type: 'thinking',
+      thinking: block.thinking,
+      signature: block.signature,
+    };
+  }
+
   return null;
 }
 
-function toClaudeParam(part: types.ContentPart): Anthropic.Messages.TextBlockParam | Anthropic.Messages.ImageBlockParam {
+function toClaudeResultParam(part: types.ResultContentPart): Anthropic.Messages.TextBlockParam | Anthropic.Messages.ImageBlockParam {
   if (part.type === 'text') {
     return {
       type: 'text',
@@ -122,13 +136,26 @@ function toClaudeAssistantMessageParam(message: types.AssistantMessage): Anthrop
       continue;
     }
 
-    content.push({
-      type: 'tool_use',
-      id: part.id,
-      name: part.name,
-      input: part.arguments
-    });
+    if (part.type === 'tool_call') {
+      content.push({
+        type: 'tool_use',
+        id: part.id,
+        name: part.name,
+        input: part.arguments
+      });
+      continue;
+    }
+
+    if (part.type === 'thinking') {
+      content.push({
+        type: 'thinking',
+        thinking: part.thinking,
+        signature: part.signature,
+      });
+      continue;
+    }
   }
+
   return {
     role: 'assistant',
     content
@@ -139,7 +166,7 @@ function toClaudeToolResultMessage(message: types.ToolResultMessage): Anthropic.
   const toolResult: Anthropic.Messages.ToolResultBlockParam = {
     type: 'tool_result',
     tool_use_id: message.toolCallId,
-    content: message.result.content.map(toClaudeParam),
+    content: message.result.content.map(toClaudeResultParam),
     is_error: message.result.isError,
   };
 
@@ -156,10 +183,13 @@ function toClaudeMessagePart(message: types.Message): Anthropic.Messages.Message
       content: message.content
     };
   }
+
   if (message.role === 'assistant')
     return toClaudeAssistantMessageParam(message);
+
   if (message.role === 'tool_result')
     return toClaudeToolResultMessage(message);
+
   throw new Error(`Unsupported message role: ${(message as any).role}`);
 }
 

@@ -4,6 +4,11 @@
       "role": "assistant",
       "content": [
         {
+          "type": "thinking",
+          "thinking": "The user wants me to reply with 42 using the given schema. Looking at the available tools, I have a function called \"report_result\" that takes a parameter called \"magic\" which is a number. I should call this function with the value 42.",
+          "signature": "EpQDCkYIChgCKkANFc63zxaoLBaVVuAm4yDU5iXDII0BFNvSRLROCANm1R1xBKS5SmHLQLQRqnyYAiNW9QYWYoruHzjcjX8wnVzbEgxhhXgU2LdOpZd4L28aDEJy6RSEYHWZB0yLpSIw34M2xsBZgPjvQ7F6s/CwMgKRcpopAjqslquDd437nGtmxzc551HJgfC1t65cO89RKvsBphGwrEuwtQPEx/MqyJ3ZlBH10/efxE73MxCRurq2jvfLmuk869CXKI7NTj0cy7xgR3KtYPFqsYzz9PBG/NwPXxHQg+YM7ncw6AUxaZ4N4RqTR83HrJe+/7SYDUCXPoQ6OrYTd6LeOAAu4YWPJxzN5keZ23UImns5BscOdmXVEXaMEZpjWi5Bq4noXMvYeKjFMNENtz43PR5P4gBSq+Oj7PfNgR4i0/h/sOmijHdkelNsk7SSx9k2XGmVAKv0/xAWehhOLjQesWgUWXkq5nr56nsWsBD1pD1SiNijFteWW3GheLRXU8ZU800aeemzoK3Q5efbE6QY/0F6C3kYAQ=="
+        },
+        {
           "type": "text",
           "text": "I'll report the result with the value 42 as requested."
         },
@@ -13,13 +18,13 @@
           "arguments": {
             "magic": 42
           },
-          "id": "toolu_01Bgp6isYRH4cJ2y3ey6hUxn"
+          "id": "toolu_01BJNZqxqM1VMuMwEGqHRZmQ"
         }
       ]
     },
     "usage": {
-      "input": 648,
-      "output": 68
+      "input": 678,
+      "output": 131
     }
   }
 }

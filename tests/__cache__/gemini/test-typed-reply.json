@@ -6,7 +6,7 @@
         {
           "type": "text",
           "text": "I can do that.",
-          "thoughtSignature": "Cq8DAdHtim8J2jO39/jHKBiCzo7aXBe9SPeYVjqLW/1SwD77y1yMqwCb9tnK1KHxswzbVU/WGt1+aaw7vaBYgV1OVE+eg/IpBsAiNo8QWRrGiSXEolOPabOpbATsH4XWaKfO+qMem2aI4L0vtnSloV058isI381kAjweKJ8vjPZlTxc9ZwzHJ1I0ycJw6gmVOoPbxPFGyu3oWKzzwOpivgbZZzEbIxZAFVGCVK7w//YlkS/EKfiBwH/rSkMZdMrVIdnPsBB5z451lqM8wvubPeOunGDB5k6XuGhhg12TSFwjhCxe6PJdQxO43EpPHLxWYGmajryNGoKSfTlLL22smwpmk/0/XYIkxJgqSRHGSSWiqxjPoIb/vuQTbFxmfyuk5YFvEPiGlzzLFB2UQwo/n1hDDojC+3IA5K7x1d4keoizRNQlqNUTcLR1LpAMPtb1xY4TsQeMFNQzTNUxpngfmtsYdXmSJVJWtNT1M2CfK8zLTC0CRIKYs0JRYG67VxaIKnDj3l1gr5KqjcQE79w3O2WH6CKgFMvYrw1FCSlU6WnA5YjSVDs7NzbnBrLOtJ6QFSs="
+          "geminiThoughtSignature": "Cq8DAdHtim8J2jO39/jHKBiCzo7aXBe9SPeYVjqLW/1SwD77y1yMqwCb9tnK1KHxswzbVU/WGt1+aaw7vaBYgV1OVE+eg/IpBsAiNo8QWRrGiSXEolOPabOpbATsH4XWaKfO+qMem2aI4L0vtnSloV058isI381kAjweKJ8vjPZlTxc9ZwzHJ1I0ycJw6gmVOoPbxPFGyu3oWKzzwOpivgbZZzEbIxZAFVGCVK7w//YlkS/EKfiBwH/rSkMZdMrVIdnPsBB5z451lqM8wvubPeOunGDB5k6XuGhhg12TSFwjhCxe6PJdQxO43EpPHLxWYGmajryNGoKSfTlLL22smwpmk/0/XYIkxJgqSRHGSSWiqxjPoIb/vuQTbFxmfyuk5YFvEPiGlzzLFB2UQwo/n1hDDojC+3IA5K7x1d4keoizRNQlqNUTcLR1LpAMPtb1xY4TsQeMFNQzTNUxpngfmtsYdXmSJVJWtNT1M2CfK8zLTC0CRIKYs0JRYG67VxaIKnDj3l1gr5KqjcQE79w3O2WH6CKgFMvYrw1FCSlU6WnA5YjSVDs7NzbnBrLOtJ6QFSs="
         },
         {
           "type": "tool_call",

@@ -10,7 +10,7 @@
             "url": "http://localhost:<PORT>/"
           },
           "id": "call_g5fmi19pjtd",
-          "thoughtSignature": "Cn4B0e2Kb7Cvne+55xKTPHn2X8QO1isIJkhCURw5EaW/KclKhZLxbnSTGmw7+yJltgMxcToMQKyeu+FTJQmWsMpXWMoyeOWT1/B2AVJKr6BciKwkYcXfK5lXhYfUnjDgwPIi493y7ZLVzRdz4MtoHCAtbuv4F7R5QphG0Pn0quE="
+          "geminiThoughtSignature": "Cn4B0e2Kb7Cvne+55xKTPHn2X8QO1isIJkhCURw5EaW/KclKhZLxbnSTGmw7+yJltgMxcToMQKyeu+FTJQmWsMpXWMoyeOWT1/B2AVJKr6BciKwkYcXfK5lXhYfUnjDgwPIi493y7ZLVzRdz4MtoHCAtbuv4F7R5QphG0Pn0quE="
         }
       ]
     },
@@ -19,7 +19,7 @@
       "output": 23
     }
   },
-  "d382dc426b6017c6f31c744ffc641eaab41b1eed": {
+  "e5d11534b0d9c8a7780ed991f0ee34288780b7c6": {
     "result": {
       "role": "assistant",
       "content": [
@@ -29,8 +29,8 @@
           "arguments": {
             "result": "The page contains a button with the text \"Welcome to tiny-loop!\"."
           },
-          "id": "call_n7bxneio7y9",
-          "thoughtSignature": "CmIB0e2Kb68aVIYZWLuYKwBSSxqRGtXx+WFyAfQCeh4a73pAT2PuYGXsAIIfxkLWDIl9b/YKo1uIGW1vjOkCUuQzeXMY45pyH7Exq8Pf0cdQqDaHqZ48TEEdJFf8lSujVqVJSg=="
+          "id": "call_d5zk8llt0k",
+          "geminiThoughtSignature": "CmIB0e2Kbxe+4tbPaRM15fO0uH4UwRdUfCasrEXoJA9KQOEE+i/IGIOFwbq8B+ywHSn6Gk89PIgQ97t1SCDviN2jwBg5m2IVzS6wFT1uqZ/yrxWJUDS66vFgX2GhRJdTresowA=="
         }
       ]
     },

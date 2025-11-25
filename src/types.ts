@@ -31,7 +31,7 @@ export type ToolCallPart = {
   name: string;
   arguments: any;
   id: string;
-  thoughtSignature?: string;
+  geminiThoughtSignature?: string;
 };
 
 export type ToolCallback = (params: {
@@ -60,13 +60,13 @@ export type UserMessage = BaseMessage & {
 
 export type AssistantMessage = BaseMessage & {
   role: 'assistant';
-  content: (TextContentPart | ToolCallPart)[];
+  content: (TextContentPart | ToolCallPart | ThinkingContentPart)[];
 };
 
 export type TextContentPart = {
   type: 'text';
   text: string;
-  thoughtSignature?: string;
+  geminiThoughtSignature?: string;
 };
 
 export type ImageContentPart = {
@@ -75,10 +75,16 @@ export type ImageContentPart = {
   mimeType: string;
 };
 
-export type ContentPart = TextContentPart | ImageContentPart;
+export type ThinkingContentPart = {
+  type: 'thinking';
+  thinking: string;
+  signature: string;
+};
+
+export type ResultContentPart = TextContentPart | ImageContentPart;
 
 export type ToolResult = {
-  content: ContentPart[];
+  content: ResultContentPart[];
   isError?: boolean;
 };
 

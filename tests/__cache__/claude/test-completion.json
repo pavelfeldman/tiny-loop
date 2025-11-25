@@ -4,18 +4,23 @@
       "role": "assistant",
       "content": [
         {
+          "type": "thinking",
+          "thinking": "The user wants me to reply with just \"Hello world\". They also mentioned that every message must contain a tool call. I have access to a `report_result` function that I can use to report the result of the task.\n\nI should use the report_result function to return \"Hello world\" as requested.",
+          "signature": "EskDCkYIChgCKkAsNfdqvS5lhGsS7nOv4j6Iz+O5KQJMllE4W8tEK5bZCO+gJSx4uEQ5icfNCCC6WcZGgVFTaH4K5slVRfrPG3iiEgxDeR36sKDsnNQJ7W4aDAnqcI81+JpqkftJJiIwGjcMDCroWl0Jb33Jwc1V/Rvl+aRCEL5uSCR1fX8A5INFFpxPbAlE8JAL4nzjt74HKrACR2QMEF7Se7ktRiyzTR8UCP/5dYmbz7/jpnDBHlTZ7lvdZwhUxCMBJuA3F4hsE1oxCVNetpEUEOJdbuR4gwl8c5NkgCgSMzj1jTn0kc6TefAtrp/2Pz9oYvnBe/pj1uwaxBXyJECf4E8Egif5zN9v1BrG5d90IaeJ5Egr+jC+nSQy1OPVrFw92IwH0R54bKINULeLvLdSQE3YZzd52SGMaOUhepTuRMT389njk+iFYGSrG6lguTjGSVvABKkTBo0uxdp27ocYwJcdQ1g+bma5mDfHK65lzEWGivPuYimBwt9GuVIjH9X/k9W8HR1Faki06sCptVbeKjey1m6hCq1g3D/M8nSu9+0g1NIM9NX4LxzKhbaYvrIe/gvRYmIJ7ecPZkQIEGiId+Eq+YksDSLP3xgB"
+        },
+        {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": "Hello world"
           },
-          "id": "toolu_01TaBDzcRK7KbycBvzurqaLb"
+          "id": "toolu_01MmVAWhMBiFDb8EfmFhQ2yG"
         }
       ]
     },
     "usage": {
-      "input": 651,
-      "output": 54
+      "input": 681,
+      "output": 127
     }
   }
 }

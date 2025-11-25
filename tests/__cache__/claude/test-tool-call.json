@@ -4,6 +4,11 @@
       "role": "assistant",
       "content": [
         {
+          "type": "thinking",
+          "thinking": "The user wants me to use the add tool to add 2 and 3. I need to call the add function with parameters a=2 and b=3.",
+          "signature": "EpsCCkYIChgCKkCYEPlPJfADnpg8WKANv2Bw2z9gj74CwyII9VM0eR/twkj0cM29//r3mOeZe6opv6jI5WHruzMea4l0G6ZlgetpEgwAu/sl2uwiF16F9zAaDG7V0iKx3tZ2eihBGyIwxWfUeHK5/OMoMhlPSFu4SYgc3JQ+/Qud0LKW6/bwOuMwHZGtdId8r7nlcK3mdadQKoIBXcP5Cv2DovEP5OFlA7Q7tIxb6cYLXMro0f/9J7v6AaIjC9/h0OV4h0npwGDy+R86s8623I/mZjNaXcvB0ktTbEkdBLmg6bOhsgCIzwo2zQoWf2Xa2OJaSd1PgCBWWh0DnurUYuixjiqu6rb4HG/Lj4G2Pr/43kSPm0fgEzU4Vb58qBgB"
+        },
+        {
           "type": "text",
           "text": "I'll add 2 and 3 using the add tool."
         },
@@ -14,22 +19,22 @@
             "a": 2,
             "b": 3
           },
-          "id": "toolu_014z78og6QRG14mduTqWZ2Bb"
+          "id": "toolu_019EUQZjzkwcWTqqsNyn7CXH"
         }
       ]
     },
     "usage": {
-      "input": 750,
-      "output": 84
+      "input": 780,
+      "output": 128
     }
   },
-  "03c38649c765154d339401291f2e0372756de03d": {
+  "f77e241804983e5106e85ee2f7124222166c991b": {
     "result": {
       "role": "assistant",
       "content": [
         {
           "type": "text",
-          "text": "The result of adding 2 and 3 is 5. Now I'll report this result."
+          "text": "The addition is complete! 2 + 3 = 5. Now I'll report this result."
         },
         {
           "type": "tool_call",
@@ -37,13 +42,13 @@
           "arguments": {
             "sum": 5
           },
-          "id": "toolu_01C3PVQjfAqS2boKNETedU4x"
+          "id": "toolu_019oNVVm17p6f47ZsbqspQRR"
         }
       ]
     },
     "usage": {
-      "input": 850,
-      "output": 76
+      "input": 924,
+      "output": 77
     }
   }
 }
