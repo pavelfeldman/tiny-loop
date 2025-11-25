@@ -58,7 +58,7 @@ async function create(body: Anthropic.Messages.MessageCreateParamsNonStreaming):
   return await response.json() as Anthropic.Messages.Message;
 }
 
-function toContentPart(block: Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCall | null {
+function toContentPart(block: Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCallPart | null {
   if (block.type === 'text') {
     return {
       type: 'text',

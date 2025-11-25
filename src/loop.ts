@@ -70,7 +70,7 @@ export class Loop {
 
       conversation.messages.push(assistantMessage);
       const text = assistantMessage.content.filter(part => part.type === 'text').map(part => part.text).join('\n');
-      const toolCalls = assistantMessage.content.filter(part => part.type === 'tool_call') as types.ToolCall[];
+      const toolCalls = assistantMessage.content.filter(part => part.type === 'tool_call') as types.ToolCallPart[];
 
       log('loop:usage', `input: ${usage.input}, output: ${usage.output}`);
       log('loop:assistant', text, JSON.stringify(assistantMessage.content, null, 2));

@@ -5,31 +5,33 @@
       "content": [
         {
           "type": "text",
-          "text": "I need to add two numbers, 2 and 3. The `add` tool is perfect for this."
+          "text": "I need to add 2 and 3. The `add` tool can be used for this.",
+          "thoughtSignature": "CqUCAdHtim+z1PSA7zx8RoRqXsVhCnmj/pvTw+ut+JEEXPRityylL2VrxqAEENR7FE676MlAHLw7iCwjp07jwlgRs5JXx80N2SDEV+cAgAEIgWiQAS1H9dh5i0TmiyZQv5/cPYFSXrgr14oSXE6CqRTClcaQWE1VJcLtpSfE5MljNjNF+exZiNxYYpzrEa7HkHHkphmUuFppT6xf7izMI6H/cayhqObar3XnB14vuJV4OS45jiEVcXrJYERm0t3pvf7lWI6GWC1Pcbj/gzXd+vaKGZKiHTOH2zVgebVfZJ+q6FX03j8WXhs36bEFebpzP87eirnCLYcPU9KPuuHHpf9cWXo4/2NrpnVX7Eqge1smeJOqB8zS3o9z5VaOsP2CDmLZ5Z5LPa8="
         },
         {
           "type": "tool_call",
           "name": "add",
           "arguments": {
-            "a": 2,
-            "b": 3
+            "b": 3,
+            "a": 2
           },
-          "id": "call_mwnepygkqy"
+          "id": "call_z7mjgeqrdvo"
         }
       ]
     },
     "usage": {
       "input": 194,
-      "output": 41
+      "output": 39
     }
   },
-  "0065a3da3afe4c1acb6bce50fbb1cef0e9c1d081": {
+  "51428929346a3fa40a3970f6bac629be46e759a8": {
     "result": {
       "role": "assistant",
       "content": [
         {
           "type": "text",
-          "text": "I have the result of adding 2 and 3, which is 5. Now I will report this result."
+          "text": "I have the sum of 2 and 3, which is 5. Now I will report this result.",
+          "thoughtSignature": "Cs8CAdHtim/gFc0su3p8SieillHsoM63sXYMzJ0GigqQ4slkQJK1CUn9mEaNca1NoLvk5yvJusnTcoOBzbH8xFPHNP0xyXwq9zuOzWfJIu3HfBGhZafJaNLpEvCiKJ3ySLrZNFUDdY7OMOCUkkMApvQ+3xvmdx30/2XSMhvSOzDHdAmpiwhKp9vq/bhf6zLLcnCNt4PaPhOavmH0VwdtFNOhvu2VL9Ovc4x/TGan1uPlmYrXtv4kVAxo9rPV2M7Odii8DY99Gm7rAjc3oqtK0E9v8RDyFqu5s123z6fdkT4nJGCymbYGKC9ZPl5viPaYZkZTn8kL8cD2U7TsvV6pUBGRqPUPxA4Fgg1NEAFstnLFYT05WDuKXPkrnDtE3V0xeoMrOrfdJ14nqzaazLSQrc9IjS2UAuZNd9GHCucG5TXBZ1UN3BcnSBLfIuVprnPAWOk="
         },
         {
           "type": "tool_call",
@@ -37,13 +39,13 @@
           "arguments": {
             "sum": 5
           },
-          "id": "call_x1bm79minfr"
+          "id": "call_41p8uw7egp8"
         }
       ]
     },
     "usage": {
-      "input": 252,
-      "output": 39
+      "input": 250,
+      "output": 38
     }
   }
 }

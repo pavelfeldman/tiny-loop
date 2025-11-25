@@ -19,6 +19,8 @@ import type * as types from '../types';
 
 const model = 'gemini-2.5-pro';
 
+type GeminiThinkingPart = gemini.Part & { thoughtSignature?: string };
+
 export class Gemini implements types.Provider {
   readonly name = 'gemini';
   readonly systemPrompt = systemPrompt;
@@ -34,22 +36,12 @@ export class Gemini implements types.Provider {
     if (!candidate)
       throw new Error('No candidates in response');
 
-    const result: types.AssistantMessage = {
-      role: 'assistant',
-      content: [],
-    };
-
-    for (const part of candidate.content.parts) {
-      if (part.text)
-        result.content.push({ type: 'text', text: part.text });
-      else if (part.functionCall)
-        result.content.push(toToolCall(part));
-    }
-
     const usage: types.Usage = {
       input: response.usageMetadata?.promptTokenCount ?? 0,
       output: response.usageMetadata?.candidatesTokenCount ?? 0,
     };
+
+    const result = toAssistantMessage(candidate);
     return { result, usage };
   }
 }
@@ -95,13 +87,33 @@ function stripUnsupportedSchemaFields(schema: any): any {
   return cleaned;
 }
 
-function toToolCall(part: gemini.FunctionCallPart): types.ToolCall {
+function toAssistantMessage(candidate: gemini.GenerateContentCandidate): types.AssistantMessage {
   return {
-    type: 'tool_call',
-    name: part.functionCall.name,
-    arguments: part.functionCall.args,
-    id: `call_${Math.random().toString(36).substring(2, 15)}`,
+    role: 'assistant',
+    content: candidate.content.parts.map(toContentPart).filter(Boolean) as (types.TextContentPart | types.ToolCallPart)[],
   };
+}
+
+function toContentPart(part: gemini.Part & { thoughtSignature?: string }): types.TextContentPart | types.ToolCallPart | null {
+  if (part.text) {
+    return {
+      type: 'text',
+      text: part.text,
+      thoughtSignature: part.thoughtSignature,
+    };
+  }
+
+  if (part.functionCall) {
+    return {
+      type: 'tool_call',
+      name: part.functionCall.name,
+      arguments: part.functionCall.args,
+      id: `call_${Math.random().toString(36).substring(2, 15)}`,
+      thoughtSignature: part.thoughtSignature,
+    };
+  }
+
+  return null;
 }
 
 function toGeminiContent(message: types.Message): gemini.Content[] {
@@ -113,18 +125,22 @@ function toGeminiContent(message: types.Message): gemini.Content[] {
   }
 
   if (message.role === 'assistant') {
-    const parts: gemini.Part[] = [];
+    const parts: GeminiThinkingPart[] = [];
 
     for (const part of message.content) {
       if (part.type === 'text') {
-        parts.push({ text: part.text });
+        parts.push({
+          text: part.text,
+          thoughtSignature: part.thoughtSignature,
+        });
         continue;
       }
       parts.push({
         functionCall: {
           name: part.name,
           args: part.arguments
-        }
+        },
+        thoughtSignature: part.thoughtSignature,
       });
     }
 

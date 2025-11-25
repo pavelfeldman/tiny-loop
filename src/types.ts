@@ -26,11 +26,12 @@ export type Tool = {
   inputSchema: Schema;
 };
 
-export type ToolCall = {
+export type ToolCallPart = {
   type: 'tool_call';
   name: string;
   arguments: any;
   id: string;
+  thoughtSignature?: string;
 };
 
 export type ToolCallback = (params: {
@@ -59,12 +60,13 @@ export type UserMessage = BaseMessage & {
 
 export type AssistantMessage = BaseMessage & {
   role: 'assistant';
-  content: (TextContentPart | ToolCall)[];
+  content: (TextContentPart | ToolCallPart)[];
 };
 
 export type TextContentPart = {
   type: 'text';
   text: string;
+  thoughtSignature?: string;
 };
 
 export type ImageContentPart = {

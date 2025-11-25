@@ -177,7 +177,7 @@ function toOpenAITool(tool: types.Tool): openai.OpenAI.Chat.Completions.ChatComp
   };
 }
 
-function toToolCall(toolCall: openai.OpenAI.Chat.Completions.ChatCompletionMessageToolCall): types.ToolCall {
+function toToolCall(toolCall: openai.OpenAI.Chat.Completions.ChatCompletionMessageToolCall): types.ToolCallPart {
   return {
     type: 'tool_call',
     name: toolCall.type === 'function' ? toolCall.function.name : toolCall.custom.name,
