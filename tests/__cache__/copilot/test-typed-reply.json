@@ -4,18 +4,22 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Reporting the value 42 as requested"
+        },
+        {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "magic": 42
           },
-          "id": "toolu_vrtx_01Ad1nAdGjtnwwsvThhSVd3U"
+          "id": "toolu_vrtx_019dtj4yFYLodCySGLyGLXA2"
         }
       ]
     },
     "usage": {
-      "input": 665,
-      "output": 53
+      "input": 689,
+      "output": 78
     }
   }
 }

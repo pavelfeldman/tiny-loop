@@ -17,17 +17,15 @@
 import type * as gemini from '@google/generative-ai';
 import type * as types from '../types';
 
-const model = 'gemini-2.5-pro';
-
 type GeminiThinkingPart = gemini.Part & { thoughtSignature?: string };
 
 export class Gemini implements types.Provider {
   readonly name = 'gemini';
   readonly systemPrompt = systemPrompt;
 
-  async complete(conversation: types.Conversation) {
+  async complete(conversation: types.Conversation, options: types.CompletionOptions) {
     const contents = conversation.messages.map(toGeminiContent).flat();
-    const response = await create({
+    const response = await create(options.model ?? 'gemini-2.5-pro', {
       contents,
       tools: conversation.tools.length > 0 ? [{ functionDeclarations: conversation.tools.map(toGeminiTool) }] : undefined,
     });
@@ -46,7 +44,7 @@ export class Gemini implements types.Provider {
   }
 }
 
-async function create(body: gemini.GenerateContentRequest): Promise<gemini.GenerateContentResponse> {
+async function create(model: string, body: gemini.GenerateContentRequest): Promise<gemini.GenerateContentResponse> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey)
     throw new Error('GEMINI_API_KEY environment variable is required');

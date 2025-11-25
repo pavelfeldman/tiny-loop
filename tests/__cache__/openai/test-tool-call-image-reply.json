@@ -6,21 +6,19 @@
         {
           "type": "tool_call",
           "name": "capture_image",
-          "arguments": {
-            "reason": "I need to capture the current image to identify the number displayed on it."
-          },
-          "id": "call_PpwpeVdI2UCQpXcUzK0LtbgU",
-          "openaiId": "fc_0b5ef1dfe606e7f00069262147c43481a39c9f2460fe0770ac",
+          "arguments": {},
+          "id": "call_UUC3siVeQAcSjPTi4GJW8wiB",
+          "openaiId": "fc_04fbf33ff4c502bd00692625758b688196a007f3fd6be9cf86",
           "openaiStatus": "completed"
         }
       ]
     },
     "usage": {
-      "input": 153,
-      "output": 32
+      "input": 152,
+      "output": 720
     }
   },
-  "358d4c08a6c7c19dc0472d57c444fc6e91f1dca3": {
+  "1057d5a61b56a8cff006543b78108d68f7c19098": {
     "result": {
       "role": "assistant",
       "content": [
@@ -30,14 +28,14 @@
           "arguments": {
             "result": 42
           },
-          "id": "call_oByfAZfsfpkv3iEh65HcFBsY",
-          "openaiId": "fc_0b5ef1dfe606e7f0006926214def4881a3ae3476edb8055498",
+          "id": "call_dgaLvB2PQLihOda1yulCYnDz",
+          "openaiId": "fc_04fbf33ff4c502bd0069263548b9348196ade5b94fb4f27410",
           "openaiStatus": "completed"
         }
       ]
     },
     "usage": {
-      "input": 955,
+      "input": 937,
       "output": 15
     }
   }

@@ -17,7 +17,12 @@
 import crypto from 'crypto';
 import * as types from './types';
 
-export function cachedComplete(provider: types.Provider, caches: types.ReplayCaches, secrets: Record<string, string>): types.Provider['complete'] {
+export function cachedComplete(provider: types.Provider, options: types.CacheOptions & types.CompletionOptions): types.Provider['complete'] {
+  const caches = options.caches;
+  const secrets = options.secrets || {};
+  if (!caches)
+    return conversation => provider.complete(conversation, options);
+
   return async (conversation: types.Conversation) => {
     const c = hideSecrets(conversation, secrets);
     const key = calculateSha1(JSON.stringify(c));
@@ -28,7 +33,7 @@ export function cachedComplete(provider: types.Provider, caches: types.ReplayCac
     }
     if (!process.env.NOCACHE && caches.after[key])
       return unhideSecrets(caches.after[key], secrets);
-    const result = await provider.complete(conversation);
+    const result = await provider.complete(conversation, options);
     caches.after[key] = hideSecrets(result, secrets);
     return result;
   };

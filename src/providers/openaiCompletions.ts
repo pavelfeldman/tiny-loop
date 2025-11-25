@@ -18,7 +18,6 @@ import type * as openai from 'openai';
 import type * as types from '../types';
 
 export type Endpoint = {
-  model: string,
   baseUrl: string;
   apiKey: string,
   headers: Record<string, string>;
@@ -37,24 +36,25 @@ export class OpenAICompletions implements types.Provider {
 
   async connect(): Promise<Endpoint> {
     return {
-      model: 'gpt-4.1',
       baseUrl: 'https://api.openai.com/v1',
       apiKey: process.env.OPENAI_API_KEY!,
       headers: {}
     };
   }
 
-  async complete(conversation: types.Conversation) {
+  async complete(conversation: types.Conversation, options: types.CompletionOptions & { injectIntent?: boolean }) {
     // Convert generic messages to OpenAI format
     const openaiMessages = conversation.messages.map(toOpenAIMessage);
-    const openaiTools = conversation.tools.map(toOpenAITool);
+    const openaiTools = conversation.tools.map(t => toOpenAITool(t, options));
 
     const endpoint = await this.endpoint();
     const response = await create({
-      model: endpoint.model,
+      model: options.model,
+      max_tokens: options.maxTokens,
       messages: openaiMessages,
       tools: openaiTools,
-      tool_choice: conversation.tools.length > 0 ? 'auto' : undefined
+      tool_choice: conversation.tools.length > 0 ? 'auto' : undefined,
+      reasoning_effort: options.reasoning ? 'medium' : undefined,
     }, endpoint);
 
     const result: types.AssistantMessage = { role: 'assistant', content: [] };
@@ -166,13 +166,21 @@ function toOpenAIMessage(message: types.Message): openai.OpenAI.Chat.Completions
   throw new Error(`Unsupported message role: ${(message as any).role}`);
 }
 
-function toOpenAITool(tool: types.Tool): openai.OpenAI.Chat.Completions.ChatCompletionTool {
+function toOpenAITool(tool: types.Tool, options: { injectIntent?: boolean }): openai.OpenAI.Chat.Completions.ChatCompletionTool {
+  const parameters = { ...tool.inputSchema };
+  if (options.injectIntent) {
+    parameters.properties = {
+      _intent: { type: 'string', description: 'Describe the intent of this tool call' },
+      ...parameters.properties || {},
+    };
+  }
+
   return {
     type: 'function',
     function: {
       name: tool.name,
       description: tool.description,
-      parameters: tool.inputSchema,
+      parameters,
     },
   };
 }

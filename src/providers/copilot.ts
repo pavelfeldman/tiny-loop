@@ -42,15 +42,14 @@ export class Copilot extends OpenAICompletions {
   override readonly systemPrompt = systemPrompt;
   override async connect(): Promise<Endpoint> {
     return {
-      model: 'claude-sonnet-4.5',
       baseUrl: 'https://api.githubcopilot.com',
       apiKey: await getCopilotToken(),
       headers: kEditorHeaders
     };
   }
 
-  override async complete(conversation: types.Conversation) {
-    const message = await super.complete(conversation);
+  override async complete(conversation: types.Conversation, options: types.CompletionOptions) {
+    const message = await super.complete(conversation, { ...options, injectIntent: true });
     const textPart = message.result.content.find(part => part.type === 'text');
     if (!textPart) {
       const content: string[] = [];
@@ -64,18 +63,6 @@ export class Copilot extends OpenAICompletions {
         message.result.content.unshift({ type: 'text', text: content.join(' ') });
     }
     return message;
-  }
-
-  wrapTool(tool: types.Tool): types.Tool {
-    const inputSchema = tool.inputSchema || { type: 'object', properties: {} };
-    inputSchema.properties = {
-      _intent: { type: 'string', description: 'Describe the intent of this tool call' },
-      ...inputSchema.properties || {},
-    };
-    return {
-      ...tool,
-      inputSchema,
-    };
   }
 }
 

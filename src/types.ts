@@ -115,12 +115,11 @@ export interface Model {
   complete(conversation: Conversation): Promise<AssistantMessage>;
 }
 
-export interface Provider {
-  name: string;
-  systemPrompt: string;
-  complete(conversation: Conversation): Promise<{ result: AssistantMessage, usage: Usage }>;
-  wrapTool?(tool: Tool): Tool;
-}
+export type CompletionOptions = {
+  model: string;
+  maxTokens?: number;
+  reasoning?: boolean;
+};
 
 export type Logger = (category: string, text: string, details?: string) => void;
 
@@ -129,3 +128,21 @@ export type ReplayCaches = {
   before: ReplayCache;
   after: ReplayCache;
 };
+
+export type CacheOptions = {
+  caches?: ReplayCaches;
+  secrets?: Record<string, string>;
+};
+
+export type RunLoopOptions = Omit<CompletionOptions, 'model'> & {
+  tools?: Tool[];
+  callTool?: ToolCallback;
+  maxTurns?: number;
+  resultSchema?: Schema;
+};
+
+export interface Provider {
+  name: string;
+  systemPrompt: string;
+  complete(conversation: Conversation, options: CompletionOptions): Promise<{ result: AssistantMessage, usage: Usage }>;
+}

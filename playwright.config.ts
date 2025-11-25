@@ -19,24 +19,28 @@ export default defineConfig<TestOptions>({
       name: 'copilot',
       use: {
         provider: 'copilot',
+        model: 'claude-sonnet-4.5',
       }
     },
     {
       name: 'openai',
       use: {
         provider: 'openai',
+        model: 'gpt-4.1',
       }
     },
     {
       name: 'claude',
       use: {
         provider: 'claude',
+        model: 'claude-sonnet-4-5',
       }
     },
     {
       name: 'gemini',
       use: {
         provider: 'gemini',
+        model: 'gemini-2.5-pro',
       }
     },
   ],

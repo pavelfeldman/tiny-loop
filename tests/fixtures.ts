@@ -27,6 +27,7 @@ export { expect } from '@playwright/test';
 
 export type TestOptions = {
   provider: 'openai' | 'copilot' | 'claude' | 'gemini';
+  model: string;
 };
 
 type TestFixtures = {
@@ -41,7 +42,8 @@ type WorkerFixtures = {
 
 export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>({
   provider: ['copilot', { option: true }],
-  loop: async ({ provider, _workerPort }, use) => {
+  model: ['', { option: true }],
+  loop: async ({ provider, _workerPort, model }, use) => {
     const cacheFile = path.join(__dirname, '__cache__', provider, sanitizeFileName(test.info().titlePath.join(' ')) + '.json');
     const dataBefore = await fs.promises.readFile(cacheFile, 'utf-8').catch(() => '{}');
     let cache: types.ReplayCache = {};
@@ -51,7 +53,11 @@ export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>(
       cache = {};
     }
     const caches: types.ReplayCaches = { before: cache, after: {} };
-    await use(new Loop(provider, { caches, secrets: { PORT: String(_workerPort) } }));
+    await use(new Loop(provider, {
+      model,
+      caches,
+      secrets: { PORT: String(_workerPort) }
+    }));
     const dataAfter = JSON.stringify(caches.after, null, 2);
     if (dataBefore !== dataAfter) {
       await fs.promises.mkdir(path.dirname(cacheFile), { recursive: true });

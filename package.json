@@ -15,10 +15,10 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc",
-    "lint": "eslint . && tsc --noEmit",
+    "build": "tsc --project tsconfig.src.json",
+    "lint": "eslint . && tsc --project tsconfig.src.json --noEmit && tsc --project tsconfig.tests.json --noEmit",
     "lint-fix": "eslint . --fix",
-    "watch": "tsc --watch",
+    "watch": "tsc --project tsconfig.src.json --watch",
     "clean": "rm -rf ./lib",
     "test": "playwright test",
     "ctest": "playwright test --project=copilot",

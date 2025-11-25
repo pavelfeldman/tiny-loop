@@ -20,28 +20,24 @@ import { prune } from './prune';
 
 import type * as types from './types';
 
-export type RunLoopOptions = {
-  tools?: types.Tool[];
-  callTool?: types.ToolCallback;
-  maxTurns?: number;
-  resultSchema?: types.Schema;
+type LoopOptions = types.CacheOptions & {
+  model: string;
   logger?: types.Logger;
 };
-
 export class Loop {
   private _provider: types.Provider;
   private _complete: types.Provider['complete'];
-  private _logger: types.Logger | undefined;
+  private _options: LoopOptions;
 
-  constructor(loopName: 'openai' | 'copilot' | 'claude' | 'gemini', options?: { caches?: types.ReplayCaches, secrets?: Record<string, string>, logger?: types.Logger }) {
+  constructor(loopName: 'openai' | 'copilot' | 'claude' | 'gemini', options: LoopOptions) {
     this._provider = getProvider(loopName);
-    this._complete = options?.caches ? cachedComplete(this._provider, options.caches, options.secrets ?? {}) : this._provider.complete.bind(this._provider);
-    this._logger = options?.logger;
+    this._options = options;
+    this._complete = cachedComplete(this._provider, options);
   }
 
-  async run<T>(task: string, options: RunLoopOptions = {}): Promise<T> {
+  async run<T>(task: string, options: types.RunLoopOptions = {}): Promise<T> {
     const allTools: types.Tool[] = [
-      ...(options.tools ?? []).map(tool => this._provider.wrapTool?.(tool) ?? tool),
+      ...(options.tools || []),
       {
         name: 'report_result',
         description: 'Report the result of the task.',
@@ -60,12 +56,12 @@ export class Loop {
       tools: allTools,
     };
 
-    const log = options.logger ?? this._logger ?? (() => {});
+    const log = this._options.logger ?? (() => {});
     log('loop:loop', `Starting ${this._provider.name} loop`, task);
     const maxTurns = options.maxTurns || 100;
     for (let iteration = 0; iteration < maxTurns; ++iteration) {
       log('loop:turn', `${iteration + 1} of (max ${maxTurns})`);
-      const { result: assistantMessage, usage } = await this._complete(conversation);
+      const { result: assistantMessage, usage } = await this._complete(conversation, { model: this._options.model, ...options });
       prune(conversation);
 
       conversation.messages.push(assistantMessage);

@@ -17,22 +17,20 @@
 import type Anthropic from '@anthropic-ai/sdk';
 import type * as types from '../types';
 
-const model = 'claude-sonnet-4-5';
-
 export class Claude implements types.Provider {
   readonly name = 'claude';
   readonly systemPrompt = systemPrompt;
 
-  async complete(conversation: types.Conversation) {
+  async complete(conversation: types.Conversation, options: types.CompletionOptions) {
     const response = await create({
-      model,
-      max_tokens: 32768,
+      model: options.model,
+      max_tokens: options.maxTokens ?? 32768,
       messages: conversation.messages.map(toClaudeMessagePart),
       tools: conversation.tools.map(toClaudeTool),
-      thinking: {
+      thinking: options.reasoning ? {
         type: 'enabled',
-        budget_tokens: 1024,
-      }
+        budget_tokens: options.maxTokens ? Math.round(options.maxTokens / 10) : 1024,
+      } : undefined,
     });
     const result = toAssistantMessage(response);
     const usage: types.Usage = {

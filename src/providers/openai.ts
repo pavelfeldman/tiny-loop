@@ -17,34 +17,11 @@
 import type * as openai from 'openai';
 import type * as types from '../types';
 
-export type Endpoint = {
-  model: string,
-  baseUrl: string;
-  apiKey: string,
-  headers: Record<string, string>;
-};
-
 export class OpenAI implements types.Provider {
   readonly name: string = 'openai';
   readonly systemPrompt: string = systemPrompt;
-  private _endpoint: Endpoint | undefined;
 
-  async endpoint(): Promise<Endpoint> {
-    if (!this._endpoint)
-      this._endpoint = await this.connect();
-    return this._endpoint;
-  }
-
-  async connect(): Promise<Endpoint> {
-    return {
-      model: 'gpt-4.1',
-      baseUrl: 'https://api.openai.com/v1',
-      apiKey: process.env.OPENAI_API_KEY!,
-      headers: {}
-    };
-  }
-
-  async complete(conversation: types.Conversation) {
+  async complete(conversation: types.Conversation, options: types.CompletionOptions) {
     const systemMessages = conversation.messages.filter(m => m.role === 'system');
     const nonSystemMessages = conversation.messages.filter(m => m.role !== 'system');
 
@@ -61,15 +38,14 @@ export class OpenAI implements types.Provider {
       ? systemMessages.map(m => m.content).join('\n\n')
       : undefined;
 
-    const endpoint = await this.endpoint();
     const response = await create({
-      model: endpoint.model,
+      model: options.model,
       input: inputItems,
       instructions,
       tools: tools.length > 0 ? tools : undefined,
       tool_choice: conversation.tools.length > 0 ? 'auto' : undefined,
       parallel_tool_calls: false,
-    }, endpoint);
+    });
 
     // Parse response output items
     const result: types.AssistantMessage = { role: 'assistant', content: [] };
@@ -100,15 +76,16 @@ export class OpenAI implements types.Provider {
   }
 }
 
-async function create(body: openai.OpenAI.Responses.ResponseCreateParamsNonStreaming, endpoint: Endpoint): Promise<openai.OpenAI.Responses.Response> {
+async function create(body: openai.OpenAI.Responses.ResponseCreateParamsNonStreaming): Promise<openai.OpenAI.Responses.Response> {
+  const apiKey = process.env.OPENAI_API_KEY!;
+
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${endpoint.apiKey}`,
+    'Authorization': `Bearer ${apiKey}`,
     'Copilot-Vision-Request': 'true',
-    ...endpoint.headers
   };
 
-  const response = await fetch(`${endpoint.baseUrl}/responses`, {
+  const response = await fetch(`https://api.openai.com/v1/responses`, {
     method: 'POST',
     headers,
     body: JSON.stringify(body)

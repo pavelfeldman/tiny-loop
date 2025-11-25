@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "commonjs",
+    "lib": ["ES2023"],
+    "esModuleInterop": true,
+    "strict": true,
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "noImplicitOverride": true,
+    "useUnknownInCatchVariables": false,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [
+    "tests"
+  ],
+}

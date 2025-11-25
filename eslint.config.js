@@ -158,7 +158,7 @@ const languageOptions = {
   ecmaVersion: 9,
   sourceType: "module",
   parserOptions: {
-    project: path.join(__filename, "..", "tsconfig.json"),
+    project: path.join(__filename, "..", "tsconfig.src.json"),
   }
 };
 
