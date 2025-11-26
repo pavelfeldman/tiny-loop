@@ -26,6 +26,7 @@ export class OpenAI implements types.Provider {
 
     const response = await create({
       model: options.model,
+      temperature: options.temperature,
       input: inputItems,
       instructions: systemPrompt(conversation.systemPrompt),
       tools: tools.length > 0 ? tools : undefined,

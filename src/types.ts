@@ -114,6 +114,7 @@ export type CompletionOptions = {
   model: string;
   maxTokens?: number;
   reasoning?: boolean;
+  temperature?: number;
 };
 
 export type Logger = (category: string, text: string, details?: string) => void;

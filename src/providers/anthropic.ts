@@ -24,6 +24,7 @@ export class Anthropic implements types.Provider {
     const response = await create({
       model: options.model,
       max_tokens: options.maxTokens ?? 32768,
+      temperature: options.temperature,
       system: systemPrompt(conversation.systemPrompt),
       messages: conversation.messages.map(toAnthropicMessagePart),
       tools: conversation.tools.map(toAnthropicTool),

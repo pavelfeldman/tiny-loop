@@ -33,6 +33,7 @@ export class Google implements types.Provider {
       },
       contents,
       tools: conversation.tools.length > 0 ? [{ functionDeclarations: conversation.tools.map(toGeminiTool) }] : undefined,
+      generationConfig: { temperature: options.temperature },
     });
 
     const [candidate] = response.candidates ?? [];

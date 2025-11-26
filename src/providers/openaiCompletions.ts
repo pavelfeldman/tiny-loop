@@ -54,6 +54,7 @@ export class OpenAICompletions implements types.Provider {
     const response = await create({
       model: options.model,
       max_tokens: options.maxTokens,
+      temperature: options.temperature,
       messages: openaiMessages,
       tools: openaiTools,
       tool_choice: conversation.tools.length > 0 ? 'auto' : undefined,
