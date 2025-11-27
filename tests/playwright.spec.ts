@@ -41,7 +41,7 @@ test('integration', async ({ loop, server }, testInfo) => {
     tools,
     callTool,
   });
-  expect(result.result).toContain('Welcome to tiny-loop!');
+  expect(result!.result).toContain('Welcome to tiny-loop!');
 });
 
 async function connectToPlaywrightMcp(workspaceDir: string): Promise<Client> {

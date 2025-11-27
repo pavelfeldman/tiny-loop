@@ -105,11 +105,6 @@ export type Conversation = {
   tools: Tool[];
 };
 
-export interface Model {
-  readonly usage: Usage;
-  complete(conversation: Conversation): Promise<AssistantMessage>;
-}
-
 export type CompletionOptions = {
   model: string;
   maxTokens?: number;
@@ -117,27 +112,13 @@ export type CompletionOptions = {
   temperature?: number;
 };
 
-export type Logger = (category: string, text: string, details?: string) => void;
+export interface Provider {
+  name: string;
+  complete(conversation: Conversation, options: CompletionOptions): Promise<{ result: AssistantMessage, usage: Usage }>;
+}
 
 export type ReplayCache = Record<string, { result: AssistantMessage, usage: Usage }>;
 export type ReplayCaches = {
   before: ReplayCache;
   after: ReplayCache;
 };
-
-export type CacheOptions = {
-  caches?: ReplayCaches;
-  secrets?: Record<string, string>;
-};
-
-export type RunLoopOptions = Omit<CompletionOptions, 'model'> & {
-  tools?: Tool[];
-  callTool?: ToolCallback;
-  maxTurns?: number;
-  resultSchema?: Schema;
-};
-
-export interface Provider {
-  name: string;
-  complete(conversation: Conversation, options: CompletionOptions): Promise<{ result: AssistantMessage, usage: Usage }>;
-}

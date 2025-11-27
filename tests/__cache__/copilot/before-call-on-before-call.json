@@ -1,0 +1,46 @@
+{
+  "17a5bea5ecd3cfaac3a0f0779eaba6c819ba684f": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Query the current counter value"
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "toolu_vrtx_01R8Gf7LkYZBQwvsqMig9Asb"
+        }
+      ]
+    },
+    "usage": {
+      "input": 752,
+      "output": 55
+    }
+  },
+  "99545f8833956989cb62936a3668bbd53bc80ecb": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Report the counter value that was queried"
+        },
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "43"
+          },
+          "id": "toolu_vrtx_011evfE71pWPpYfJPgKwG8qR"
+        }
+      ]
+    },
+    "usage": {
+      "input": 809,
+      "output": 77
+    }
+  }
+}

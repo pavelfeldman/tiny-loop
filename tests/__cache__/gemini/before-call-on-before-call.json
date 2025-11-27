@@ -1,0 +1,40 @@
+{
+  "17a5bea5ecd3cfaac3a0f0779eaba6c819ba684f": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "call_l9e8qzw4aln",
+          "googleThoughtSignature": "CsQBAXLI2ny9M+eiSW83haB3yqkUcCR/AyqbAJqCa9QkZI3pKGVm+pFq9zweSTWKG3u/Xy/nNFpkSYdC+Li+7rB8QZkKDnz1y7sNzgoJempcDAVWOsDuHjqwmtpzV/fZ3ngpyjUA+3G12Q/a6DGqYCuiB7QDSVntfEFSzV/xycEvfPdOS1ITviZnzJMGUY6vRUEzQl9ssQo4ddT/ODvUI0bI0CzvUL0453hKEq4xU+Y0Kxh4Ny/PUouPDB3Bz+HTZ9LiqaLOZg=="
+        }
+      ]
+    },
+    "usage": {
+      "input": 157,
+      "output": 8
+    }
+  },
+  "386abe313b776f583c4c99fff36607a37056782a": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "Counter value is 43"
+          },
+          "id": "call_n982imwsnx",
+          "googleThoughtSignature": "CrQBAXLI2nwUsDFEx8dXzieVMjX3SFeqBiQCWWw1tDcoWRWCRNzeZmA5AAt9orlAcxQVfLbEVEfJWB/1Fau2OV1erhzIOdNCvj8g1F/FnJt6VaS+qTt/P7gm1ouTG6Lcf8nfPr74BxmxInYvuXukaH8f5e/bRR1u+zdZZ0vHXm0UQruNOQQIV0t5NrxEFX6SR0ASGc/mrnZ1+5vzfUNPor0vEOtKURmmJvSU/dlWp35tUg4A8/vx"
+        }
+      ]
+    },
+    "usage": {
+      "input": 183,
+      "output": 20
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "17a5bea5ecd3cfaac3a0f0779eaba6c819ba684f": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Let me query the current counter value for you."
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "call_LpiwtgYKIJOF1AbYrFKcKtXX",
+          "openaiId": "fc_0fe6fba65fb709c60069279b6754d08191b175d749134950c8",
+          "openaiStatus": "completed"
+        }
+      ],
+      "openaiId": "msg_0fe6fba65fb709c60069279b66c0188191bd477db51cbca223",
+      "openaiStatus": "completed"
+    },
+    "usage": {
+      "input": 147,
+      "output": 22
+    }
+  },
+  "4d9a995a62f20057f2dcecd204e840e446716640": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "The counter value is 43."
+          },
+          "id": "call_FrWJs61DKWXOFxVy7uJowPQq",
+          "openaiId": "fc_0fe6fba65fb709c60069279b690e9c819188e176f97e978060",
+          "openaiStatus": "completed"
+        }
+      ]
+    },
+    "usage": {
+      "input": 181,
+      "output": 21
+    }
+  }
+}

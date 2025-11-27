@@ -1,0 +1,46 @@
+{
+  "17a5bea5ecd3cfaac3a0f0779eaba6c819ba684f": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll query the counter value and then report it."
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "toolu_01MtnewZdyHnzth2YUArDswb"
+        }
+      ]
+    },
+    "usage": {
+      "input": 687,
+      "output": 46
+    }
+  },
+  "83850d79ede3b77ad0fce82c8b05c0a2c9743882": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Now I'll report this result."
+        },
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "43"
+          },
+          "id": "toolu_01WbJSQbpUo6btinBzBRpshx"
+        }
+      ]
+    },
+    "usage": {
+      "input": 750,
+      "output": 61
+    }
+  }
+}
