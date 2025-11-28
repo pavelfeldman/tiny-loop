@@ -1,12 +1,12 @@
 {
-  "name": "tiny-loop",
-  "version": "0.0.13",
-  "description": "Tiny agentic loop",
+  "name": "@lowire/loop",
+  "version": "0.0.2",
+  "description": "Small agentic loop",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pavelfeldman/tiny-loop.git"
+    "url": "git+https://github.com/pavelfeldman/lowire.git"
   },
-  "homepage": "https://github.com/pavelfeldman/tiny-loop",
+  "homepage": "https://github.com/pavelfeldman/lowire",
   "engines": {
     "node": ">=20"
   },

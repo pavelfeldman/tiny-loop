@@ -27,7 +27,7 @@ import * as types from '../lib/types';
 test('integration', async ({ loop, server }, testInfo) => {
   server.setContent('/', `
     <html>
-      <button>Welcome to tiny-loop!</button>
+      <button>Welcome to lowire!</button>
     </html>
   `, 'text/html');
   const client = await connectToPlaywrightMcp(testInfo.outputPath());
@@ -41,7 +41,7 @@ test('integration', async ({ loop, server }, testInfo) => {
     tools,
     callTool,
   });
-  expect(result!.result).toContain('Welcome to tiny-loop!');
+  expect(result!.result).toContain('Welcome to lowire!');
 });
 
 async function connectToPlaywrightMcp(workspaceDir: string): Promise<Client> {

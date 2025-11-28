@@ -30,7 +30,7 @@
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
-            "result": "The page at http://localhost:<PORT>/ contains a button with the text \"Welcome to tiny-loop!\". The page appears to be a simple page with just this single interactive button element."
+            "result": "The page at http://localhost:<PORT>/ contains a button with the text \"Welcome to lowire!\". The page appears to be a simple page with just this single interactive button element."
           },
           "id": "toolu_018WFtZhwqbUosB74SgPPW3H"
         }

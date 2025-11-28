@@ -26,7 +26,7 @@
       "content": [
         {
           "type": "text",
-          "text": "The page at http://localhost:<PORT>/ contains a button labeled \"Welcome to tiny-loop!\". There doesn't appear to be any other visible content based on the snapshot."
+          "text": "The page at http://localhost:<PORT>/ contains a button labeled \"Welcome to lowire!\". There doesn't appear to be any other visible content based on the snapshot."
         }
       ],
       "openaiId": "msg_0ab63ef8355b4bf70069274b25afe08192ad0fabe2d284b29c",
@@ -45,7 +45,7 @@
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
-            "result": "The page at http://localhost:<PORT>/ contains a button labeled 'Welcome to tiny-loop!'. There is no additional visible content."
+            "result": "The page at http://localhost:<PORT>/ contains a button labeled 'Welcome to lowire!'. There is no additional visible content."
           },
           "id": "call_L7Wv07hgxsCYmiHvLsgNhMDt",
           "openaiId": "fc_0ab63ef8355b4bf70069274b2830908192bcdfaff1c83b6c14",
