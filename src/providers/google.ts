@@ -94,11 +94,11 @@ function stripUnsupportedSchemaFields(schema: any): any {
 function toAssistantMessage(candidate: google.GenerateContentCandidate): types.AssistantMessage {
   return {
     role: 'assistant',
-    content: candidate.content.parts.map(toContentPart).filter(Boolean) as (types.TextContentPart | types.ToolCallPart)[],
+    content: candidate.content.parts.map(toContentPart).filter(Boolean) as (types.TextContentPart | types.ToolCallContentPart)[],
   };
 }
 
-function toContentPart(part: google.Part & { thoughtSignature?: string }): types.TextContentPart | types.ToolCallPart | null {
+function toContentPart(part: google.Part & { thoughtSignature?: string }): types.TextContentPart | types.ToolCallContentPart | null {
   if (part.text) {
     return {
       type: 'text',

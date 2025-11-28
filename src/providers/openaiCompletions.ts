@@ -95,7 +95,7 @@ async function create(body: openai.OpenAI.Chat.Completions.ChatCompletionCreateP
   return await response.json() as openai.OpenAI.Chat.Completions.ChatCompletion;
 }
 
-function toOpenAIResultContentPart(part: types.ResultContentPart): openai.OpenAI.Chat.Completions.ChatCompletionContentPart {
+function toOpenAIResultContentPart(part: types.ResultPart): openai.OpenAI.Chat.Completions.ChatCompletionContentPart {
   if (part.type === 'text') {
     return {
       type: 'text',
@@ -181,7 +181,7 @@ function toOpenAITool(tool: types.Tool, options: { injectIntent?: boolean }): op
   };
 }
 
-function toToolCall(toolCall: openai.OpenAI.Chat.Completions.ChatCompletionMessageToolCall): types.ToolCallPart {
+function toToolCall(toolCall: openai.OpenAI.Chat.Completions.ChatCompletionMessageToolCall): types.ToolCallContentPart {
   return {
     type: 'tool_call',
     name: toolCall.type === 'function' ? toolCall.function.name : toolCall.custom.name,

@@ -84,7 +84,7 @@ async function create(body: openai.OpenAI.Responses.ResponseCreateParamsNonStrea
   return await response.json() as openai.OpenAI.Responses.Response;
 }
 
-function toResultContentPart(part: types.ResultContentPart): openai.OpenAI.Responses.ResponseInputText | openai.OpenAI.Responses.ResponseInputImage {
+function toResultContentPart(part: types.ResultPart): openai.OpenAI.Responses.ResponseInputText | openai.OpenAI.Responses.ResponseInputImage {
   if (part.type === 'text') {
     return {
       type: 'input_text',
@@ -158,7 +158,7 @@ function toOpenAIFunctionTool(tool: types.Tool): openai.OpenAI.Responses.Functio
   };
 }
 
-function toFunctionToolCall(toolCall: types.ToolCallPart): openai.OpenAI.Responses.ResponseFunctionToolCall {
+function toFunctionToolCall(toolCall: types.ToolCallContentPart): openai.OpenAI.Responses.ResponseFunctionToolCall {
   return {
     type: 'function_call',
     call_id: toolCall.id,
@@ -169,7 +169,7 @@ function toFunctionToolCall(toolCall: types.ToolCallPart): openai.OpenAI.Respons
   };
 }
 
-function toToolCall(functionCall: openai.OpenAI.Responses.ResponseFunctionToolCall): types.ToolCallPart {
+function toToolCall(functionCall: openai.OpenAI.Responses.ResponseFunctionToolCall): types.ToolCallContentPart {
   return {
     type: 'tool_call',
     name: functionCall.name,

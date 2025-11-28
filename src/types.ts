@@ -26,38 +26,34 @@ export type Tool = {
   inputSchema: Schema;
 };
 
-export type ToolCallPart = {
-  type: 'tool_call';
-  name: string;
-  arguments: any;
-  id: string;
-  googleThoughtSignature?: string;
-  openaiId?: string;
-  openaiStatus?: 'completed' | 'incomplete' | 'in_progress';
-};
-
 export type ToolCallback = (params: {
   name: string;
   arguments: any;
 }) => Promise<ToolResult>;
 
-export type Usage = {
-  input: number;
-  output: number;
-};
+// Messages
 
 export type BaseMessage = {
   role: 'user' | 'assistant' | 'tool_result';
 };
+
+export type Message =
+  | UserMessage
+  | AssistantMessage
+  | ToolResultMessage;
+
+// 1. User message
 
 export type UserMessage = BaseMessage & {
   role: 'user';
   content: string;
 };
 
+// 2. Assistant message
+
 export type AssistantMessage = BaseMessage & {
   role: 'assistant';
-  content: (TextContentPart | ToolCallPart | ThinkingContentPart)[];
+  content: (TextContentPart | ToolCallContentPart | ThinkingContentPart)[];
   openaiId?: string;
   openaiStatus?: 'completed' | 'incomplete' | 'in_progress';
 };
@@ -68,24 +64,23 @@ export type TextContentPart = {
   googleThoughtSignature?: string;
 };
 
-export type ImageContentPart = {
-  type: 'image';
-  data: string;
-  mimeType: string;
-};
-
 export type ThinkingContentPart = {
   type: 'thinking';
   thinking: string;
   signature: string;
 };
 
-export type ResultContentPart = TextContentPart | ImageContentPart;
-
-export type ToolResult = {
-  content: ResultContentPart[];
-  isError?: boolean;
+export type ToolCallContentPart = {
+  type: 'tool_call';
+  name: string;
+  arguments: any;
+  id: string;
+  googleThoughtSignature?: string;
+  openaiId?: string;
+  openaiStatus?: 'completed' | 'incomplete' | 'in_progress';
 };
+
+// 3. Tool result message
 
 export type ToolResultMessage = BaseMessage & {
   role: 'tool_result';
@@ -94,10 +89,25 @@ export type ToolResultMessage = BaseMessage & {
   result: ToolResult;
 };
 
-export type Message =
-  | UserMessage
-  | AssistantMessage
-  | ToolResultMessage;
+export type TextResultPart = {
+  type: 'text';
+  text: string;
+};
+
+export type ImageResultPart = {
+  type: 'image';
+  data: string;
+  mimeType: string;
+};
+
+export type ResultPart = TextResultPart | ImageResultPart;
+
+export type ToolResult = {
+  content: ResultPart[];
+  isError?: boolean;
+};
+
+// Conversation and Completion
 
 export type Conversation = {
   systemPrompt: string;
@@ -116,6 +126,11 @@ export interface Provider {
   name: string;
   complete(conversation: Conversation, options: CompletionOptions): Promise<{ result: AssistantMessage, usage: Usage }>;
 }
+
+export type Usage = {
+  input: number;
+  output: number;
+};
 
 export type ReplayCache = Record<string, { result: AssistantMessage, usage: Usage }>;
 export type ReplayCaches = {

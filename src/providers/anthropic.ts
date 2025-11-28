@@ -61,7 +61,7 @@ async function create(body: anthropic.Anthropic.Messages.MessageCreateParamsNonS
   return await response.json() as anthropic.Anthropic.Messages.Message;
 }
 
-function toContentPart(block: anthropic.Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCallPart | types.ThinkingContentPart | null {
+function toContentPart(block: anthropic.Anthropic.Messages.ContentBlock): types.TextContentPart | types.ToolCallContentPart | types.ThinkingContentPart | null {
   if (block.type === 'text') {
     return {
       type: 'text',
@@ -89,7 +89,7 @@ function toContentPart(block: anthropic.Anthropic.Messages.ContentBlock): types.
   return null;
 }
 
-function toAnthropicResultParam(part: types.ResultContentPart): anthropic.Anthropic.Messages.TextBlockParam | anthropic.Anthropic.Messages.ImageBlockParam {
+function toAnthropicResultParam(part: types.ResultPart): anthropic.Anthropic.Messages.TextBlockParam | anthropic.Anthropic.Messages.ImageBlockParam {
   if (part.type === 'text') {
     return {
       type: 'text',
