@@ -32,15 +32,18 @@ export type LoopOptions = types.CompletionOptions & {
   callTool?: types.ToolCallback;
   maxTurns?: number;
   resultSchema?: types.Schema;
-  logger?: Logger;
-  caches?: types.ReplayCaches;
-  secrets?: Record<string, string>;
-  onBeforeTurn?: (parms: { turn: number, conversation: types.Conversation, sizes: Sizes, totalUsage: types.Usage }) => Promise<'stop' | undefined | void>;
+  log?: Logger;
+  cache?: {
+    messages: types.ReplayCache;
+    secrets: Record<string, string>;
+  };
+  onBeforeTurn?: (params: { turn: number, conversation: types.Conversation, sizes: Sizes, totalUsage: types.Usage }) => Promise<'stop' | undefined | void>;
 };
 
 export class Loop {
   private _provider: types.Provider;
   private _loopOptions: LoopOptions;
+  private _cacheOutput: types.ReplayCache = {};
 
   constructor(loopName: 'openai' | 'github' | 'anthropic' | 'google', options: LoopOptions) {
     this._provider = getProvider(loopName);
@@ -66,7 +69,7 @@ export class Loop {
       tools: allTools,
     };
 
-    const log = options.logger ?? (() => {});
+    const log = options.log ?? (() => {});
     const totalUsage: types.Usage = { input: 0, output: 0 };
 
     log('loop:loop', `Starting ${this._provider.name} loop`, task);
@@ -79,7 +82,13 @@ export class Loop {
       if (status === 'stop')
         return undefined;
 
-      const { result: assistantMessage, usage } = await cachedComplete(this._provider, conversation, options);
+      const caches = options.cache ? {
+        input: options.cache.messages,
+        output: this._cacheOutput,
+        secrets: options.cache.secrets
+      } : undefined;
+
+      const { result: assistantMessage, usage } = await cachedComplete(this._provider, conversation, caches, options);
       totalUsage.input += usage.input;
       totalUsage.output += usage.output;
       conversation.messages.push(assistantMessage);
@@ -172,6 +181,10 @@ export class Loop {
       messages,
       toolsResults,
     };
+  }
+
+  cache(): types.ReplayCache {
+    return this._cacheOutput;
   }
 }
 

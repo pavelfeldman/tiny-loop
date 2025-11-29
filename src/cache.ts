@@ -17,29 +17,34 @@
 import crypto from 'crypto';
 
 import type * as types from './types';
-import type { LoopOptions } from './loop';
 
-export async function cachedComplete(provider: types.Provider, conversation: types.Conversation, options: LoopOptions): ReturnType<types.Provider['complete']> {
-  const caches = options.caches;
-  const secrets = options.secrets || {};
+type ReplayCaches = {
+  input: types.ReplayCache;
+  output: types.ReplayCache;
+  secrets: Record<string, string>;
+};
+
+export async function cachedComplete(provider: types.Provider, conversation: types.Conversation, caches: ReplayCaches | undefined, options: types.CompletionOptions): ReturnType<types.Provider['complete']> {
   if (!caches)
     return await provider.complete(conversation, options);
 
+  const secrets = caches.secrets || {};
   const c = hideSecrets(conversation, secrets);
   const key = calculateSha1(JSON.stringify(c));
 
-  if (!process.env.TL_NO_CACHE && caches.before[key]) {
-    caches.after[key] = caches.before[key];
-    return unhideSecrets(caches.before[key] ?? caches.after[key], secrets);
+  if (!process.env.LOWIRE_NO_CACHE && caches.input[key]) {
+    caches.output[key] = caches.input[key];
+    return unhideSecrets(caches.input[key] ?? caches.output[key], secrets);
   }
-  if (!process.env.TL_NO_CACHE && caches.after[key])
-    return unhideSecrets(caches.after[key], secrets);
 
-  if (process.env.TL_FORCE_CACHE)
+  if (!process.env.LOWIRE_NO_CACHE && caches.output[key])
+    return unhideSecrets(caches.output[key], secrets);
+
+  if (process.env.LOWIRE_FORCE_CACHE)
     throw new Error('Cache missing but TL_FORCE_CACHE is set' + JSON.stringify(conversation, null, 2));
 
   const result = await provider.complete(conversation, options);
-  caches.after[key] = hideSecrets(result, secrets);
+  caches.output[key] = hideSecrets(result, secrets);
   return result;
 }
 

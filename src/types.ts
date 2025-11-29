@@ -133,7 +133,3 @@ export type Usage = {
 };
 
 export type ReplayCache = Record<string, { result: AssistantMessage, usage: Usage }>;
-export type ReplayCaches = {
-  before: ReplayCache;
-  after: ReplayCache;
-};

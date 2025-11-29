@@ -52,16 +52,15 @@ export const test = baseTest.extend<TestOptions & TestFixtures, WorkerFixtures>(
     } catch {
       cache = {};
     }
-    const caches: types.ReplayCaches = { before: cache, after: {} };
-    await use(new Loop(provider, {
+    const loop = new Loop(provider, {
       model,
-      caches,
-      secrets: { PORT: String(_workerPort) }
-    }));
-    const dataAfter = JSON.stringify(caches.after, null, 2);
-    if (dataBefore !== dataAfter) {
+      cache: { messages: cache, secrets: { PORT: String(_workerPort) } },
+    })
+    await use(loop);
+    const dataAfter = JSON.stringify(loop.cache(), null, 2);
+    if (dataBefore !== dataAfter && testInfo.status === testInfo.expectedStatus) {
       await fs.promises.mkdir(path.dirname(cacheFile), { recursive: true });
-      await fs.promises.writeFile(cacheFile, JSON.stringify(caches.after, null, 2));
+      await fs.promises.writeFile(cacheFile, dataAfter);
     }
   },
 
