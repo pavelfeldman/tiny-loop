@@ -44,3 +44,33 @@ test('on before call', async ({ loop }) => {
   const anyTotalUsage = { input: anyNumber, output: anyNumber };
   expect(log[0]).toEqual({ turn: 0, sizes: anySizes, totalUsage: anyTotalUsage });
 });
+
+test('conversation pruning', async ({ loop }) => {
+  const tools: types.Tool[] = [
+    {
+      name: 'counter',
+      description: 'Query counter value',
+      inputSchema: { type: 'object', properties: {}, },
+    }
+  ];
+
+  let index = 0;
+  const counterValues = ['42', '72', '126'];
+  const callTool: types.ToolCallback = async params => {
+    expect(params.name).toBe('counter');
+    return { content: [{ type: 'text', text: `${counterValues[index++]}` }] };
+  };
+
+  const result = await loop.run('Query counter 3 times and then report them as comma separated text w/o spaces', {
+    tools,
+    callTool,
+    onBeforeTurn: async ({ conversation, turn, sizes, totalUsage }) => {
+      const lastMessage = conversation.messages[conversation.messages.length - 1];
+      if (lastMessage.role !== 'tool_result')
+        return;
+      const text = lastMessage.result.content[0] as types.TextContentPart;
+      text.text = text.text.replace('2', '3');
+    },
+  });
+  expect(result).toEqual({ result: expect.stringContaining('43,73,136') });
+});

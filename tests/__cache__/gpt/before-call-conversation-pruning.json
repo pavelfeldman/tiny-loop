@@ -1,0 +1,104 @@
+{
+  "1685f0baf7e364b7a5c5834cb999d44c4cd7c53e": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I will start by querying the counter for the first time."
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "call_4zxbUFdJZ7ZtEKT0J1WNjZCv",
+          "openaiId": "fc_059a001871021d9500692a490ab2d88197a88c1518729f8a75",
+          "openaiStatus": "completed"
+        }
+      ],
+      "openaiId": "msg_059a001871021d9500692a490a54e881979aa5d5b45b982657",
+      "openaiStatus": "completed"
+    },
+    "usage": {
+      "input": 157,
+      "output": 24
+    }
+  },
+  "df47991f1669403ec14d096ae74973ac12042836": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I received the first counter value. Now, querying for the second time."
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "call_im0MKFvwYGtFYYVQ5UEvheuT",
+          "openaiId": "fc_059a001871021d9500692a490d743c8197ac2fb0f68e700bc9",
+          "openaiStatus": "completed"
+        }
+      ],
+      "openaiId": "msg_059a001871021d9500692a490d06d081979b81856a433eb38a",
+      "openaiStatus": "completed"
+    },
+    "usage": {
+      "input": 191,
+      "output": 27
+    }
+  },
+  "a5f3776417d393ad83be4929e0f8bade0844e8bb": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I have the second value. Now I will query the counter for the third time."
+        },
+        {
+          "type": "tool_call",
+          "name": "counter",
+          "arguments": {},
+          "id": "call_ZyuruQlThWmWdEuDaLs9PM1e",
+          "openaiId": "fc_059a001871021d9500692a49101da881979e66b5f710f685d6",
+          "openaiStatus": "completed"
+        }
+      ],
+      "openaiId": "msg_059a001871021d9500692a490faf008197ad04716103b456c9",
+      "openaiStatus": "completed"
+    },
+    "usage": {
+      "input": 228,
+      "output": 29
+    }
+  },
+  "6470c695b6ff2c167e9106f1f9b7ca40b4a26e9d": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Now I will report the three values as comma separated text without spaces."
+        },
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "43,73,136"
+          },
+          "id": "call_ONQW9dhFGCpZM9mF97DUGUsm",
+          "openaiId": "fc_059a001871021d9500692a4911dfa48197b4436f5c8b523d0a",
+          "openaiStatus": "completed"
+        }
+      ],
+      "openaiId": "msg_059a001871021d9500692a49116b4081979da68b8865f201bd",
+      "openaiStatus": "completed"
+    },
+    "usage": {
+      "input": 267,
+      "output": 35
+    }
+  }
+}
