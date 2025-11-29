@@ -1,0 +1,42 @@
+{
+  "80c886ab371d4250a8afc524c4332b77ba6195a1": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "browser_navigate",
+          "arguments": {
+            "url": "http://localhost:<PORT>/"
+          },
+          "id": "call_8ndxcc2zymy",
+          "googleThoughtSignature": "CrgBAXLI2nxsOLiThpq9Y0nJ50yIBxnCq53Ebl8jM7EAef6ThrvFMHIc4ifYja1yY6ez4iveFP73CKExP8WJNPx29iKbo48nOvQ4JZyS3nAW6u/bhny1uA96IuCSFfZNg/V/IYGhwJHpmpssTBlLpSpMOPPprz0Ne37x31lYRARRNx40clgj3xaP2xx02NcEbAVm7K+QzfEqFrAsp/M26mCorzZNHUaMo2ykOqu+Q3cGFYvjjtDxfW/T4g=="
+        }
+      ]
+    },
+    "usage": {
+      "input": 2124,
+      "output": 23
+    }
+  },
+  "1f0581f92227ccb4fe5f9daf8a06c150866b159e": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "The page contains a button with the text \"Welcome to lowire!\"."
+          },
+          "id": "call_09irhewhmzwx",
+          "googleThoughtSignature": "CsEBAXLI2nwZ9XCf9xeoqNxaPECDJtekc1ymqwXsMGzMz1RByjweKW3MNOFUYX3GqHsreNkaWV5XM1++1efPCt8XQLAfRz55a5cA6bNdnSO5Gj3Yr3CBjo9Kw1CJ+iv12ZFP2Tm/t+FTcWhZjUbuDlpP7SGG/86bs7SXujZ+P+OH7e6fKXCVvBG6xtlo8xJYAvW1NzSughobEQ6KImZ5MU1OpBBTfCXuacVkcDu0w2qp4LM28qvFniqZO/kZ7FbtVHCHvA=="
+        }
+      ]
+    },
+    "usage": {
+      "input": 2248,
+      "output": 29
+    }
+  }
+}

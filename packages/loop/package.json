@@ -1,0 +1,26 @@
+{
+  "name": "@lowire/loop",
+  "version": "0.0.2",
+  "description": "Small agentic loop",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pavelfeldman/lowire.git"
+  },
+  "homepage": "https://github.com/pavelfeldman/lowire",
+  "engines": {
+    "node": ">=20"
+  },
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+  },
+  "exports": {
+    ".": {
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "types": "./index.d.ts"
+    }
+  }
+}

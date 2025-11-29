@@ -4,7 +4,7 @@ import { defineConfig } from '@playwright/test';
 
 import { TestOptions } from './tests/fixtures';
 
-dotenv.config({ path: path.resolve(__dirname, '.env'), quiet: true });
+dotenv.config({ quiet: true });
 
 export default defineConfig<TestOptions>({
   testDir: './tests',

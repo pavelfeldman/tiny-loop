@@ -158,7 +158,7 @@ const languageOptions = {
   ecmaVersion: 9,
   sourceType: "module",
   parserOptions: {
-    project: path.join(__filename, "..", "tsconfig.src.json"),
+    project: path.join(__filename, "..", "packages/loop/tsconfig.src.json"),
   }
 };
 
@@ -189,7 +189,7 @@ const noBooleanCompareRules = {
 
 module.exports = [
   {
-    ignores: ["lib/**/*.js", "lib/**/*.d.ts", "index.d.ts", "tests/**", "playwright.config.ts"],
+    ignores: ["**/lib/**/*.js", "**/lib/**/*.d.ts", "**/index.d.ts", "**/tests/**", "**/playwright.config.ts"],
   },
   {
     files: ["**/*.ts", "**/*.tsx"],

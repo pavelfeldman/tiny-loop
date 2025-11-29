@@ -1,0 +1,44 @@
+{
+  "80c886ab371d4250a8afc524c4332b77ba6195a1": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "I'll navigate to that URL and report what's on the page using the snapshot from the navigation result."
+        },
+        {
+          "type": "tool_call",
+          "name": "browser_navigate",
+          "arguments": {
+            "url": "http://localhost:<PORT>/"
+          },
+          "id": "toolu_01TyJd7c5YADtzK9ovgbMZ7M"
+        }
+      ]
+    },
+    "usage": {
+      "input": 3219,
+      "output": 81
+    }
+  },
+  "97747db96f04f7efbe95aa698394a0c83d1a7f5d": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "tool_call",
+          "name": "report_result",
+          "arguments": {
+            "result": "The page at http://localhost:<PORT>/ contains:\n- Page Title: (empty/blank)\n- A button with the text \"Welcome to lowire!\"\n\nThis appears to be a simple page with minimal content, featuring just a single button element."
+          },
+          "id": "toolu_013GhKUSuFLpAUy16uLefJKF"
+        }
+      ]
+    },
+    "usage": {
+      "input": 3386,
+      "output": 105
+    }
+  }
+}

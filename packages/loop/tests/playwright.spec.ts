@@ -22,7 +22,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { ListRootsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 import { test, expect } from './fixtures';
-import * as types from '../lib/types';
+import { mcpTools } from '../lib/mcp/index';
 
 test('integration', async ({ loop, server }, testInfo) => {
   server.setContent('/', `
@@ -31,15 +31,11 @@ test('integration', async ({ loop, server }, testInfo) => {
     </html>
   `, 'text/html');
   const client = await connectToPlaywrightMcp(testInfo.outputPath());
-  const { tools } = await client.listTools() as { tools: types.Tool[] };
-  const callTool: types.ToolCallback = async params => {
-    return await client.callTool({ name: params.name, arguments: params.arguments }) as types.ToolResult;
-  };
+  const toolSupport = await mcpTools(client);
   const result = await loop.run<{ result: string }>(
     `Navigate to ${server.PREFIX} via Playwright MCP and tell me what is on that page.
      Use snapshot in the navigation result, do not take snapshots or screenshots.`, {
-    tools,
-    callTool,
+    ...toolSupport
   });
   expect(result!.result).toContain('Welcome to lowire!');
 });

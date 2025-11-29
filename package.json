@@ -1,7 +1,8 @@
 {
-  "name": "@lowire/loop",
+  "name": "lowire-monorepo",
+  "private": true,
   "version": "0.0.2",
-  "description": "Small agentic loop",
+  "description": "Lowire - a small agentic loop",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pavelfeldman/lowire.git"
@@ -15,22 +16,18 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc --project tsconfig.src.json",
-    "lint": "eslint . && tsc --project tsconfig.src.json --noEmit && tsc --project tsconfig.tests.json --noEmit",
-    "lint-fix": "eslint . --fix",
-    "watch": "tsc --project tsconfig.src.json --watch",
-    "clean": "rm -rf ./lib",
-    "test": "playwright test",
-    "ctest": "playwright test --project=copilot",
-    "deploy": "npm run clean && npm run build && npm publish"
+    "build": "tsc --project packages/loop/tsconfig.src.json",
+    "watch": "tsc --project packages/loop/tsconfig.src.json --watch",
+    "clean": "rm -rf packages/loop/lib",
+    "test": "playwright test -c packages/loop/playwright.config.ts",
+    "ctest": "playwright test -c packages/loop/playwright.config.ts --project=copilot",
+    "deploy": "npm run clean && npm run build && cd packages/loop && npm publish",
+    "lint": "eslint . && tsc --project packages/loop/tsconfig.src.json --noEmit && tsc --project packages/loop/tsconfig.tests.json --noEmit",
+    "lint-fix": "eslint . --fix"
   },
-  "exports": {
-    ".": {
-      "import": "./index.mjs",
-      "require": "./index.js",
-      "types": "./index.d.ts"
-    }
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.70.0",
     "@eslint/eslintrc": "^3.2.0",
