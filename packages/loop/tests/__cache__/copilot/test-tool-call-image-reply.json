@@ -4,12 +4,15 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Capture an image to see what number is displayed on it",
+          "copilotToolCallId": "toolu_vrtx_016JiMJ2SgNeSzKAxGcdUJn2"
+        },
+        {
           "type": "tool_call",
           "name": "capture_image",
-          "arguments": {
-            "_intent": "Capture the image to see what number is displayed on it"
-          },
-          "id": "toolu_vrtx_01TRzcN4noE36UZmHWdtigPi"
+          "arguments": {},
+          "id": "toolu_vrtx_016JiMJ2SgNeSzKAxGcdUJn2"
         }
       ]
     },
@@ -18,17 +21,22 @@
       "output": 64
     }
   },
-  "95e2f56d66c264ebe8dea47ad348f681c9842c99": {
+  "e3732cabf397191fbbbbd2474035a0f4c0b8a539": {
     "result": {
       "role": "assistant",
       "content": [
+        {
+          "type": "text",
+          "text": "Report the number 42 that is visible in the captured image",
+          "copilotToolCallId": "toolu_vrtx_01EZoibBmSHk9WYhAaQ73vEm"
+        },
         {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": 42
           },
-          "id": "toolu_vrtx_017oghkMWTrrzgyZBfraHBuN"
+          "id": "toolu_vrtx_01EZoibBmSHk9WYhAaQ73vEm"
         }
       ]
     },

@@ -4,12 +4,17 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Reporting the value 42 as requested by the user",
+          "copilotToolCallId": "toolu_vrtx_01FeDHDSxGaXykKX4SMw1vPw"
+        },
+        {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "magic": 42
           },
-          "id": "toolu_vrtx_01E152VQ7A7SVKa4zzJWWB9F"
+          "id": "toolu_vrtx_01FeDHDSxGaXykKX4SMw1vPw"
         }
       ]
     },

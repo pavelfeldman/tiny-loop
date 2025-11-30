@@ -4,12 +4,15 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Query the current counter value",
+          "copilotToolCallId": "toolu_vrtx_01PYX2vHQfDVGNVHDMFWoYF4"
+        },
+        {
           "type": "tool_call",
           "name": "counter",
-          "arguments": {
-            "_intent": "Query the current counter value"
-          },
-          "id": "toolu_vrtx_01XvUnsZ6dsvTdSU9hohx9nj"
+          "arguments": {},
+          "id": "toolu_vrtx_01PYX2vHQfDVGNVHDMFWoYF4"
         }
       ]
     },
@@ -18,17 +21,22 @@
       "output": 55
     }
   },
-  "6b63f4894a7b636e2d53b90fa3bd617a5279cd5c": {
+  "6e4bdd05ad161415168dcb8baf5aac12d1f5df57": {
     "result": {
       "role": "assistant",
       "content": [
+        {
+          "type": "text",
+          "text": "Report the counter value that was retrieved",
+          "copilotToolCallId": "toolu_vrtx_01XefKMKXSntB5PJCKCU8BGH"
+        },
         {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": "43"
           },
-          "id": "toolu_vrtx_019R3Xp7SgaM3DHpupHFKWJB"
+          "id": "toolu_vrtx_01XefKMKXSntB5PJCKCU8BGH"
         }
       ]
     },

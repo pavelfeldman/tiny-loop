@@ -4,37 +4,61 @@
       "role": "assistant",
       "content": [
         {
-          "type": "tool_call",
-          "name": "playwright__browser_navigate",
-          "arguments": {
-            "url": "http://localhost:<PORT>/",
-            "_intent": "Navigate to localhost:<PORT> to see what content is on the page"
-          },
-          "id": "toolu_vrtx_01Cx4i1awQvyPrY5CURWbTvj"
+          "type": "text",
+          "text": "I'll navigate to http://localhost:<PORT>/ and use the snapshot from the navigation result to tell you what's on the page."
         }
       ]
     },
     "usage": {
       "input": 4296,
-      "output": 92
+      "output": 123
     }
   },
-  "4329caf5e00233563b0e7dfedb9e95317a90d485": {
+  "a84d94e2ef81752faec29aea838f4e42bae150a5": {
     "result": {
       "role": "assistant",
       "content": [
+        {
+          "type": "text",
+          "text": "Navigate to localhost:<PORT> to see what's on the page",
+          "copilotToolCallId": "toolu_vrtx_013TJcW96n58DHHiDj6hwAsU"
+        },
+        {
+          "type": "tool_call",
+          "name": "playwright__browser_navigate",
+          "arguments": {
+            "url": "http://localhost:<PORT>/"
+          },
+          "id": "toolu_vrtx_013TJcW96n58DHHiDj6hwAsU"
+        }
+      ]
+    },
+    "usage": {
+      "input": 4348,
+      "output": 91
+    }
+  },
+  "5511b9a635ede256bc28501f05945199591069f1": {
+    "result": {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Report what's on the page at localhost:<PORT>",
+          "copilotToolCallId": "toolu_vrtx_017JoF1ZyFYQvgnFCXBeF42H"
+        },
         {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": "The page at http://localhost:<PORT>/ contains a button with the text \"Welcome to lowire!\""
           },
-          "id": "toolu_vrtx_01EfGByaSnb15QpLTZPbMqfa"
+          "id": "toolu_vrtx_017JoF1ZyFYQvgnFCXBeF42H"
         }
       ]
     },
     "usage": {
-      "input": 4475,
+      "input": 4526,
       "output": 101
     }
   }

@@ -4,39 +4,48 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Adding 2 and 3 as requested by the user",
+          "copilotToolCallId": "toolu_vrtx_019k4K9U77S8S5huSY5wjoY3"
+        },
+        {
           "type": "tool_call",
           "name": "add",
           "arguments": {
-            "_intent": "Adding 2 and 3 together as requested by the user",
             "a": 2,
             "b": 3
           },
-          "id": "toolu_vrtx_01DV8iUB2tyZCHxry4AP9Kqc"
+          "id": "toolu_vrtx_019k4K9U77S8S5huSY5wjoY3"
         }
       ]
     },
     "usage": {
       "input": 820,
-      "output": 98
+      "output": 97
     }
   },
-  "86e1d03bbc51f1e1bdd61bcf02344260ba4277c2": {
+  "0d309e26a0e562d01a90ae1ac6cf02b2c7e42b0d": {
     "result": {
       "role": "assistant",
       "content": [
+        {
+          "type": "text",
+          "text": "Reporting the result of adding 2 and 3",
+          "copilotToolCallId": "toolu_vrtx_01JvtmYuNiDzVt1vUfSrWBjx"
+        },
         {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "sum": 5
           },
-          "id": "toolu_vrtx_01UaDeAegaPNqbKbHoMJZddC"
+          "id": "toolu_vrtx_01JvtmYuNiDzVt1vUfSrWBjx"
         }
       ]
     },
     "usage": {
-      "input": 935,
-      "output": 80
+      "input": 934,
+      "output": 81
     }
   }
 }

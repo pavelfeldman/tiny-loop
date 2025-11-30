@@ -4,31 +4,37 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "First counter query",
+          "copilotToolCallId": "toolu_vrtx_01AnhPhUunQMXUMcfDLUaZ1Y"
+        },
+        {
           "type": "tool_call",
           "name": "counter",
-          "arguments": {
-            "_intent": "First counter query"
-          },
-          "id": "toolu_vrtx_013yXSL12Rei7mkxMW7Teoby"
+          "arguments": {},
+          "id": "toolu_vrtx_01AnhPhUunQMXUMcfDLUaZ1Y"
         }
       ]
     },
     "usage": {
       "input": 764,
-      "output": 125
+      "output": 53
     }
   },
-  "c6748861cfab786de0078d96179c11ecaefa1048": {
+  "4c5fb6e581660bf29711c2ce439df4d266abf9c2": {
     "result": {
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Second counter query",
+          "copilotToolCallId": "toolu_vrtx_017LJA47jabVhMoNC1AzCZ5D"
+        },
+        {
           "type": "tool_call",
           "name": "counter",
-          "arguments": {
-            "_intent": "Second counter query"
-          },
-          "id": "toolu_vrtx_019bbVb26oVDTPi743a6mE1n"
+          "arguments": {},
+          "id": "toolu_vrtx_017LJA47jabVhMoNC1AzCZ5D"
         }
       ]
     },
@@ -37,17 +43,20 @@
       "output": 53
     }
   },
-  "c5e8c5980efd07775b91cf762a0fabb8bc1b0c1c": {
+  "dd991088da69bed88921fc6df53e211444ac4b97": {
     "result": {
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Third counter query",
+          "copilotToolCallId": "toolu_vrtx_01F8NCs1XryTPWT2ruxDZJR1"
+        },
+        {
           "type": "tool_call",
           "name": "counter",
-          "arguments": {
-            "_intent": "Third counter query"
-          },
-          "id": "toolu_vrtx_01WHwiK22X2zddPi98PPpE1g"
+          "arguments": {},
+          "id": "toolu_vrtx_01F8NCs1XryTPWT2ruxDZJR1"
         }
       ]
     },
@@ -56,17 +65,22 @@
       "output": 53
     }
   },
-  "c6ff7ede24ff6cecb0227c0e23a9ef408dfde355": {
+  "a2990e359669e6c951a1b1829d872892888a56eb": {
     "result": {
       "role": "assistant",
       "content": [
+        {
+          "type": "text",
+          "text": "Report the three counter values as comma separated text without spaces",
+          "copilotToolCallId": "toolu_vrtx_01BkRa2VghvAcKdBH5vKkB38"
+        },
         {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": "43,73,136"
           },
-          "id": "toolu_vrtx_01Jw4j1vYwDFvAMkjQWfy7LP"
+          "id": "toolu_vrtx_01BkRa2VghvAcKdBH5vKkB38"
         }
       ]
     },

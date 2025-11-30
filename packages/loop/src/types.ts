@@ -62,6 +62,7 @@ export type TextContentPart = {
   type: 'text';
   text: string;
   googleThoughtSignature?: string;
+  copilotToolCallId?: string;
 };
 
 export type ThinkingContentPart = {

@@ -4,18 +4,23 @@
       "role": "assistant",
       "content": [
         {
+          "type": "text",
+          "text": "Responding to test request with \"Hello world\"",
+          "copilotToolCallId": "toolu_vrtx_0185ZFJsuYeSn6GMBP4fHj1x"
+        },
+        {
           "type": "tool_call",
           "name": "report_result",
           "arguments": {
             "result": "Hello world"
           },
-          "id": "toolu_vrtx_01ELrJ34GSBPxXaSzxLP1vcb"
+          "id": "toolu_vrtx_0185ZFJsuYeSn6GMBP4fHj1x"
         }
       ]
     },
     "usage": {
       "input": 697,
-      "output": 84
+      "output": 81
     }
   }
 }
