@@ -59,6 +59,7 @@ export class Loop {
       inputSchema: options.resultSchema ?? defaultResultSchema,
     });
 
+    this._history = [];
     const conversation: types.Conversation = {
       systemPrompt,
       messages: [
@@ -94,11 +95,12 @@ export class Loop {
       totalUsage.input += usage.input;
       totalUsage.output += usage.output;
       conversation.messages.push(assistantMessage);
+      this._history.push({ category: '', content: `\n### Turn ${turn + 1}` });
       this._history.push({ category: 'assistant', content: text });
 
       const toolCalls = assistantMessage.content.filter(part => part.type === 'tool_call') as types.ToolCallContentPart[];
       if (toolCalls.length === 0) {
-        const errorText = '`Tool call expected. Call the "report_result" tool when the task is complete.`';
+        const errorText = 'Tool call expected. Call the "report_result" tool when the task is complete.';
         this._history.push({ category: 'error', content: errorText });
         conversation.messages.push({
           role: 'user',
@@ -176,26 +178,34 @@ export class Loop {
         });
       }
 
-      if (options.summarize)
-        this._summarize(conversation, task);
+      if (options.summarize) {
+        const prompt = this._prompt(task);
+        // eslint-disable-next-line no-console
+        console.log(prompt);
+        conversation.messages = [
+          { role: 'user', content: prompt },
+        ];
+      }
     }
 
+    if (options.summarize)
+      return this._prompt(task) as unknown as T;
     throw new Error('Failed to perform step, max attempts reached');
   }
 
-  private _summarize(conversation: types.Conversation, task: string) {
-    const prompt = `
-### Task
+  private _prompt(task: string) {
+    return `
+## Task
 ${task}
 
-### History
-${this._history.map(entry => `[${entry.category}] ${entry.content}`).join('\n\n')}
+## History
+${this._history.map(entry => {
+    const prefix = entry.category ? `[${entry.category}] ` : '';
+    return `${prefix} ${entry.content}`;
+  }).join('\n')}
 
-${Object.entries(this._state).map(([key, value]) => `### ${key}\n${value}`).join('\n\n\n')}
+${Object.entries(this._state).map(([key, value]) => `## ${key}\n${value}`).join('\n\n\n')}
 `;
-    conversation.messages = [
-      { role: 'user', content: prompt },
-    ];
   }
 
   private _sizes(conversation: types.Conversation): Sizes {

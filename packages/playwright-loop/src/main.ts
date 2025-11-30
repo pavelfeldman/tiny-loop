@@ -40,8 +40,8 @@ async function main() {
   });
 
   const task = 'Navigate to https://demo.playwright.dev/todomvc/ and perform acceptance testing of the functionality';
-  const result = await ll.run(task, { debug, summarize: true, maxTurns: 10 });
-  console.log('Final result:', JSON.stringify(result, null, 2));
+  const result = await ll.run(task, { debug, summarize: true, maxTurns: 30 });
+  console.log('Intermediate result:', result);
   await close();
 }
 
@@ -55,21 +55,21 @@ async function callToolAdapter(callTool: loop.ToolCallback, params: { name: stri
   const history: { category: string; content: string }[] = [];
   result._meta['dev.lowire/history'] = history;
   if (parsedResult.code)
-    history!.push({ category: 'code', content: parsedResult.code });
+    history!.push({ category: 'code', content: parsedResult.code.trim() });
   if (parsedResult.result)
-    history!.push({ category: 'result', content: parsedResult.result });
+    history!.push({ category: 'result', content: parsedResult.result.trim() });
   if (parsedResult.consoleMessages)
-    history!.push({ category: 'console', content: parsedResult.consoleMessages });
+    history!.push({ category: 'console', content: parsedResult.consoleMessages.trim() });
 
   if (parsedResult.pageState)
-    result._meta!['dev.lowire/state'] = { 'Page state': parsedResult.pageState };
+    result._meta!['dev.lowire/state'] = { 'Page state': parsedResult.pageState.trim() };
   return result;
 }
 
 function parseResponse(response: CallToolResult) {
   if (response?.content?.[0].type !== 'text')
     throw new Error('Unexpected response format');
-  const text = response.content[0].text;
+  const text = stripAnsiEscapes(response.content[0].text);
   const sections = parseSections(text);
   const result = sections.get('Result');
   const code = sections.get('Ran Playwright code');
@@ -108,6 +108,11 @@ function parseSections(text: string): Map<string, string> {
   }
 
   return sections;
+}
+
+const ansiRegex = new RegExp('([\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)|(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~])))', 'g');
+function stripAnsiEscapes(str: string): string {
+  return str.replace(ansiRegex, '');
 }
 
 void main();
