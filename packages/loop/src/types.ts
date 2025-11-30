@@ -104,6 +104,10 @@ export type ImageResultPart = {
 export type ResultPart = TextResultPart | ImageResultPart;
 
 export type ToolResult = {
+  _meta?: {
+    'dev.lowire/history'?: { category: string, content: string }[];
+    'dev.lowire/state'?: Record<string, string>;
+  };
   content: ResultPart[];
   isError?: boolean;
 };

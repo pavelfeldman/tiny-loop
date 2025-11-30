@@ -34,6 +34,7 @@ export type LoopOptions = types.CompletionOptions & {
     messages: types.ReplayCache;
     secrets: Record<string, string>;
   };
+  summarize?: boolean;
   onBeforeTurn?: (params: { turn: number, conversation: types.Conversation, sizes: Sizes, totalUsage: types.Usage }) => Promise<'stop' | undefined | void>;
 };
 
@@ -41,6 +42,8 @@ export class Loop {
   private _provider: types.Provider;
   private _loopOptions: LoopOptions;
   private _cacheOutput: types.ReplayCache = {};
+  private _history: { category: string, content: string }[] = [];
+  private _state: Record<string, string> = {};
 
   constructor(loopName: 'openai' | 'github' | 'anthropic' | 'google', options: LoopOptions) {
     this._provider = getProvider(loopName);
@@ -49,14 +52,12 @@ export class Loop {
 
   async run<T>(task: string, runOptions: Omit<LoopOptions, 'model'> & { model?: string } = {}): Promise<T | undefined> {
     const options: LoopOptions = { ...this._loopOptions, ...runOptions };
-    const allTools: types.Tool[] = [
-      ...(options.tools || []),
-      {
-        name: 'report_result',
-        description: 'Report the result of the task.',
-        inputSchema: options.resultSchema ?? defaultResultSchema,
-      },
-    ];
+    const allTools: types.Tool[] = [...options.tools || []];
+    allTools.push({
+      name: 'report_result',
+      description: 'Report the result of the task.',
+      inputSchema: options.resultSchema ?? defaultResultSchema,
+    });
 
     const conversation: types.Conversation = {
       systemPrompt,
@@ -84,25 +85,32 @@ export class Loop {
         secrets: options.cache.secrets
       } : undefined;
 
+      debug?.('lowire:loop')(`Request`, JSON.stringify({ ...conversation, tools: `${conversation.tools.length} tools` }, null, 2));
       const { result: assistantMessage, usage } = await cachedComplete(this._provider, conversation, caches, options);
-      totalUsage.input += usage.input;
-      totalUsage.output += usage.output;
-      conversation.messages.push(assistantMessage);
       const text = assistantMessage.content.filter(part => part.type === 'text').map(part => part.text).join('\n');
-      const toolCalls = assistantMessage.content.filter(part => part.type === 'tool_call') as types.ToolCallContentPart[];
-
       debug?.('lowire:loop')('Usage', `input: ${usage.input}, output: ${usage.output}`);
       debug?.('lowire:loop')('Assistant', text, JSON.stringify(assistantMessage.content, null, 2));
 
+      totalUsage.input += usage.input;
+      totalUsage.output += usage.output;
+      conversation.messages.push(assistantMessage);
+      this._history.push({ category: 'assistant', content: text });
+
+      const toolCalls = assistantMessage.content.filter(part => part.type === 'tool_call') as types.ToolCallContentPart[];
       if (toolCalls.length === 0) {
+        const errorText = '`Tool call expected. Call the "report_result" tool when the task is complete.`';
+        this._history.push({ category: 'error', content: errorText });
         conversation.messages.push({
           role: 'user',
-          content: `Tool call expected. Call the "report_result" tool when the task is complete.`,
+          content: errorText,
         });
         continue;
       }
 
-      const toolResults: Array<{ toolName: string; toolCallId: string; result: types.ToolResult }> = [];
+      for (const toolCall of toolCalls)
+        this._history.push({ category: 'tool_call', content: `${toolCall.name}(${JSON.stringify(toolCall.arguments)})` });
+
+      const toolResults: Array<{ toolName: string; toolCallId: string; callArgs: Record<string, any>; result: types.ToolResult }> = [];
       for (const toolCall of toolCalls) {
         const { name, arguments: args, id } = toolCall;
 
@@ -115,21 +123,27 @@ export class Loop {
             name,
             arguments: args,
           });
-
           const text = result.content.filter(part => part.type === 'text').map(part => part.text).join('\n');
           debug?.('lowire:loop')('Tool result', text, JSON.stringify(result, null, 2));
 
+          this._history.push(...(result._meta?.['dev.lowire/history'] ?? []));
+          for (const [name, state] of Object.entries(result._meta?.['dev.lowire/state'] || {}))
+            this._state[name] = state;
+
           toolResults.push({
             toolName: name,
+            callArgs: args,
             toolCallId: id,
             result,
           });
         } catch (error) {
           const errorMessage = `Error while executing tool "${name}": ${error instanceof Error ? error.message : String(error)}\n\nPlease try to recover and complete the task.`;
           debug?.('lowire:loop')('Tool error', errorMessage, String(error));
+          this._history.push({ category: 'error', content: errorMessage });
 
           toolResults.push({
             toolName: name,
+            callArgs: args,
             toolCallId: id,
             result: {
               content: [{ type: 'text', text: errorMessage }],
@@ -141,6 +155,7 @@ export class Loop {
           for (const remainingToolCall of toolCalls.slice(toolCalls.indexOf(toolCall) + 1)) {
             toolResults.push({
               toolName: remainingToolCall.name,
+              callArgs: args,
               toolCallId: remainingToolCall.id,
               result: {
                 content: [{ type: 'text', text: `This tool call is skipped due to previous error.` }],
@@ -155,12 +170,32 @@ export class Loop {
       for (const toolResult of toolResults) {
         conversation.messages.push({
           role: 'tool_result',
-          ...toolResult,
+          toolName: toolResult.toolName,
+          toolCallId: toolResult.toolCallId,
+          result: toolResult.result,
         });
       }
+
+      if (options.summarize)
+        this._summarize(conversation, task);
     }
 
     throw new Error('Failed to perform step, max attempts reached');
+  }
+
+  private _summarize(conversation: types.Conversation, task: string) {
+    const prompt = `
+### Task
+${task}
+
+### History
+${this._history.map(entry => `[${entry.category}] ${entry.content}`).join('\n\n')}
+
+${Object.entries(this._state).map(([key, value]) => `### ${key}\n${value}`).join('\n\n\n')}
+`;
+    conversation.messages = [
+      { role: 'user', content: prompt },
+    ];
   }
 
   private _sizes(conversation: types.Conversation): Sizes {
