@@ -16,6 +16,8 @@
 
 import { getProvider } from './providers/registry';
 import { cachedComplete } from './cache';
+import { summarizeConversation } from './summary';
+
 import type * as types from './types';
 
 export type LoopOptions = types.CompletionOptions & {
@@ -71,7 +73,7 @@ export class Loop {
         secrets: options.cache.secrets
       } : undefined;
 
-      const summarizedConversation = options.summarize ? this._summarizeConversation(task, conversation) : conversation;
+      const summarizedConversation = options.summarize ? this._summarizeConversation(task, conversation, options) : conversation;
       debug?.('lowire:loop')(`Request`, JSON.stringify({ ...summarizedConversation, tools: `${summarizedConversation.tools.length} tools` }, null, 2));
       const { result: assistantMessage, usage } = await cachedComplete(this._provider, summarizedConversation, caches, options);
       const text = assistantMessage.content.filter(part => part.type === 'text').map(part => part.text).join('\n');
@@ -90,7 +92,6 @@ export class Loop {
 
       for (const toolCall of toolCalls) {
         const { name, arguments: args } = toolCall;
-
         debug?.('lowire:loop')('Call tool', name, JSON.stringify(args, null, 2));
         if (name === 'report_result')
           return args;
@@ -132,80 +133,19 @@ export class Loop {
     }
 
     if (options.summarize)
-      return this._summarizeConversation(task, conversation) as any;
+      return this._summarizeConversation(task, conversation, options) as any;
     throw new Error('Failed to perform step, max attempts reached');
   }
 
-  private _summarizeConversation(task: string, conversation: types.Conversation): types.Conversation {
-    const summary: string[] = ['## Task', task];
-    const combinedState: Record<string, string> = {};
-
-    const assistantMessages: types.AssistantMessage[] = conversation.messages.filter(message => message.role === 'assistant');
-    for (let turn = 0; turn < assistantMessages.length - 1; ++turn) {
-      if (turn === 0) {
-        summary.push('');
-        summary.push('## History');
-      }
-
-      const message = assistantMessages[turn];
-      summary.push(``);
-      summary.push(`### Turn ${turn + 1}`);
-
-      for (const part of message.content) {
-        if (part.type === 'text') {
-          summary.push(`[assistant] ${part.text}`);
-          continue;
-        }
-
-        if (part.type === 'tool_call') {
-          summary.push(`[tool_call] ${part.name}(${JSON.stringify(part.arguments)})`);
-          if (part.result) {
-            for (const [name, state] of Object.entries(part.result._meta?.['dev.lowire/state'] || {}))
-              combinedState[name] = state;
-            summary.push(`[tool_result]`);
-            this._toolResultHistory(part.result, summary);
-          }
-          continue;
-        }
-      }
-
-      if (message.toolError)
-        summary.push(`[error] ${message.toolError}`);
-    }
-
-    const lastMessage: types.AssistantMessage | undefined = assistantMessages[assistantMessages.length - 1];
-    if (lastMessage) {
-      // Remove state from combined state as it'll be a part of the last assistant message.
-      for (const part of lastMessage.content.filter(part => part.type === 'tool_call')) {
-        for (const name of Object.keys(part.result?._meta?.['dev.lowire/state'] || {}))
-          delete combinedState[name];
-      }
-    }
-
-    for (const [name, state] of Object.entries(combinedState))
-      summary.push(`### ${name}\n${state}`);
-
-    // eslint-disable-next-line no-console
-    console.log(`
-============================================================
-${summary.join('\n')}
-------------------------------------------------------------
-${JSON.stringify(lastMessage, null, 2)}`);
-
+  private _summarizeConversation(task: string, conversation: types.Conversation, options: LoopOptions): types.Conversation {
+    const { summary, lastMessage } = summarizeConversation(task, conversation, options);
     return {
       ...conversation,
       messages: [
-        { role: 'user', content: summary.join('\n') },
+        { role: 'user', content: summary },
         ...lastMessage ? [lastMessage] : [],
       ],
     };
-  }
-
-  private _toolResultHistory(toolResult: types.ToolResult, summary: string[]) {
-    for (const item of toolResult._meta?.['dev.lowire/history'] || [])
-      summary.push(`<${item.category}>${item.content}</${item.category}>`);
-    if (toolResult.isError)
-      summary.push(`- error: ${toolResult.content.filter(part => part.type === 'text').map(part => part.text).join('\n')}`);
   }
 
   cache(): types.ReplayCache {

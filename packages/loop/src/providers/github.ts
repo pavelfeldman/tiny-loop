@@ -37,15 +37,26 @@ export class Github implements types.Provider {
     const openaiTools = conversation.tools.map(t => toCopilotTool(t));
 
     const bearer = await this._bearer();
-    const response = await create({
-      model: options.model,
-      max_tokens: options.maxTokens,
-      temperature: options.temperature,
-      messages: openaiMessages,
-      tools: openaiTools,
-      tool_choice: conversation.tools.length > 0 ? 'auto' : undefined,
-      reasoning_effort: options.reasoning ? 'medium' : undefined,
-    }, bearer, options);
+    let response: openai.OpenAI.Chat.Completions.ChatCompletion | undefined;
+
+    // Github provider is unreliable, retry up to 3 times.
+    for (let i = 0; i < 3; ++i) {
+      response = await create({
+        model: options.model,
+        max_tokens: options.maxTokens,
+        temperature: options.temperature,
+        messages: openaiMessages,
+        tools: openaiTools,
+        tool_choice: conversation.tools.length > 0 ? 'auto' : undefined,
+        reasoning_effort: options.reasoning ? 'medium' : undefined,
+        parallel_tool_calls: false,
+      }, bearer, options);
+      if (response.choices.length)
+        break;
+    }
+
+    if (!response || !response.choices.length)
+      throw new Error('Failed to get response from GitHub Copilot');
 
     const result: types.AssistantMessage = { role: 'assistant', content: [] };
     const message = response.choices[0].message;

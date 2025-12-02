@@ -108,7 +108,7 @@ export type Conversation = {
   tools: Tool[];
 };
 
-type Debug = (category: string) => (...args: any[]) => void;
+export type Debug = (category: string) => (...args: any[]) => void;
 
 export type CompletionOptions = {
   model: string;

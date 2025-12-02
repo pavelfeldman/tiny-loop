@@ -11,7 +11,9 @@
     "useUnknownInCatchVariables": false,
     "skipLibCheck": true,
     "outDir": "lib",
-    "declaration": true
+    "declaration": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "./jsx"
   },
   "include": [
     "src"

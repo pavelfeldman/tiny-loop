@@ -25,7 +25,7 @@ async function main() {
   const { tools, callTool, close } = await loop.createMcpTools({
     playwright: {
       command: 'npx',
-      args: ['playwright', 'run-mcp-server', '--isolated'],
+      args: ['playwright', 'run-mcp-server', '--isolated', '--snapshot-mode=full'],
       cwd: process.cwd(),
       stderr: 'pipe',
     }
@@ -50,18 +50,27 @@ async function callToolAdapter(callTool: loop.ToolCallback, params: { name: stri
     name: params.name,
     arguments: params.arguments,
   });
+  const includeHistory = params.arguments._meta?.['dev.lowire/history'] || false;
+  const includeState = params.arguments._meta?.['dev.lowire/state'] || false;
+  if (!includeHistory && !includeState)
+    return result;
+
   const parsedResult = parseResponse(result);
   result._meta = result._meta || {};
-  const history: { category: string; content: string }[] = [];
-  result._meta['dev.lowire/history'] = history;
-  if (parsedResult.code)
-    history!.push({ category: 'code', content: parsedResult.code.trim() });
-  if (parsedResult.result)
-    history!.push({ category: 'result', content: parsedResult.result.trim() });
-  if (parsedResult.consoleMessages)
-    history!.push({ category: 'console', content: parsedResult.consoleMessages.trim() });
+  if (includeHistory) {
+    const history: { category: string; content: string }[] = [];
+    result._meta['dev.lowire/history'] = history;
+    if (parsedResult.code)
+      history!.push({ category: 'code', content: parsedResult.code.trim() });
+    if (parsedResult.isError && parsedResult.result)
+      history!.push({ category: 'error', content: parsedResult.result.trim() });
+    if (parsedResult.result && !parsedResult.isError)
+      history!.push({ category: 'result', content: parsedResult.result.trim() });
+    if (parsedResult.consoleMessages)
+      history!.push({ category: 'console', content: parsedResult.consoleMessages.trim() });
+  }
 
-  if (parsedResult.pageState)
+  if (includeState && parsedResult.pageState)
     result._meta!['dev.lowire/state'] = { 'Page state': parsedResult.pageState.trim() };
   return result;
 }
