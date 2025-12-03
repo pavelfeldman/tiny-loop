@@ -15,4 +15,3 @@
  */
 
 module.exports.Loop = require('./lib/loop').Loop;
-module.exports.createMcpTools = require('./lib/mcp/index').createMcpTools;

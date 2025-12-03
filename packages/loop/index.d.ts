@@ -16,4 +16,3 @@
 
 export * from './lib/types';
 export * from './lib/loop';
-export * from './lib/mcp/index';

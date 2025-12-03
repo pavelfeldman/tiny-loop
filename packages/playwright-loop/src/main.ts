@@ -18,11 +18,13 @@ import dotenv from 'dotenv';
 import debug from 'debug';
 import * as loop from '@lowire/loop';
 
+import { createMcpTools } from './mcp';
+
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 dotenv.config({ quiet: true });
 
 async function main() {
-  const { tools, callTool, close } = await loop.createMcpTools({
+  const { tools, callTool, close } = await createMcpTools({
     playwright: {
       command: 'npx',
       args: ['playwright', 'run-mcp-server', '--isolated', '--snapshot-mode=full'],

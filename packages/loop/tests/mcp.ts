@@ -17,7 +17,7 @@
 import url from 'url';
 
 import type { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import type * as types from '../types';
+import type * as types from '../src/types';
 
 export type McpServer = {
   command: string;

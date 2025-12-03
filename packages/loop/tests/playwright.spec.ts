@@ -17,7 +17,7 @@
 import path from 'path';
 
 import { test, expect } from './fixtures';
-import { createMcpTools } from '../lib/mcp/index';
+import { createMcpTools } from './mcp';
 
 test('integration', async ({ loop, server }, testInfo) => {
   server.setContent('/', `
