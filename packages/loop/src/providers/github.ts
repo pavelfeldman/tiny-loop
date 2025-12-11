@@ -59,16 +59,18 @@ export class Github implements types.Provider {
       throw new Error('Failed to get response from GitHub Copilot');
 
     const result: types.AssistantMessage = { role: 'assistant', content: [] };
-    const message = response.choices[0].message;
-    if (message.content)
-      result.content.push({ type: 'text', text: message.content });
-    for (const entry of message.tool_calls || []) {
-      if (entry.type !== 'function')
-        continue;
-      const { toolCall, intent } = toToolCall(entry);
-      if (intent)
-        result.content.push({ type: 'text', text: intent, copilotToolCallId: toolCall.id });
-      result.content.push(toolCall);
+    for (const choice of response.choices) {
+      const message = choice.message;
+      if (message.content)
+        result.content.push({ type: 'text', text: message.content });
+      for (const entry of message.tool_calls || []) {
+        if (entry.type !== 'function')
+          continue;
+        const { toolCall, intent } = toToolCall(entry);
+        if (intent)
+          result.content.push({ type: 'text', text: intent, copilotToolCallId: toolCall.id });
+        result.content.push(toolCall);
+      }
     }
 
     const usage: types.Usage = {
