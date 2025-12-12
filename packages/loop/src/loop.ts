@@ -19,32 +19,33 @@ import { cachedComplete } from './cache';
 import { summarizeConversation } from './summary';
 
 import type * as types from './types';
+type PromiseOrValue<T> = T | Promise<T>;
 
 export type LoopEvents = {
   onBeforeTurn?: (params: {
     conversation: types.Conversation;
     totalUsage: types.Usage;
     budgetTokens: number;
-  }) => Promise<'break' | 'continue' | void>;
+  }) => PromiseOrValue<'continue' | 'break' | void>;
   onAfterTurn?: (params: {
     assistantMessage: types.AssistantMessage;
     totalUsage: types.Usage;
     budgetTokens: number;
-  }) => Promise<'break' | 'continue' | void>;
+  }) => PromiseOrValue<'continue' | 'break' | void>;
   onBeforeToolCall?: (params: {
     assistantMessage: types.AssistantMessage;
     toolCall: types.ToolCallContentPart;
-  }) => Promise<'allowed' | 'disallowed' | void>;
+  }) => PromiseOrValue<'continue' | 'break' | 'disallow' | void>;
   onAfterToolCall?: (params: {
     assistantMessage: types.AssistantMessage;
     toolCall: types.ToolCallContentPart;
     result: types.ToolResult;
-  }) => Promise<'allowed' | 'disallowed' | void>;
+  }) => PromiseOrValue<'continue' | 'break' | 'disallow' | void>;
   onToolCallError?: (params: {
     assistantMessage: types.AssistantMessage;
     toolCall: types.ToolCallContentPart;
     error: Error;
-  }) => Promise<void>;
+  }) => PromiseOrValue<'continue' | 'break' | void>;
 };
 
 export type LoopOptions = types.CompletionOptions & LoopEvents & {
@@ -146,7 +147,9 @@ export class Loop {
           return { result: args as T, status: 'ok', usage: totalUsage, turns };
 
         const status = await options.onBeforeToolCall?.({ assistantMessage, toolCall });
-        if (status === 'disallowed') {
+        if (status === 'break')
+          return { status: 'break', usage: totalUsage, turns };
+        if (status === 'disallow') {
           toolCall.result = {
             content: [{ type: 'text', text: 'Tool call is disallowed.' }],
             isError: true,
@@ -170,7 +173,9 @@ export class Loop {
           debug?.('lowire:loop')('Tool result', text, JSON.stringify(result, null, 2));
 
           const status = await options.onAfterToolCall?.({ assistantMessage, toolCall, result });
-          if (status === 'disallowed') {
+          if (status === 'break')
+            return { status: 'break', usage: totalUsage, turns };
+          if (status === 'disallow') {
             toolCall.result = {
               content: [{ type: 'text', text: 'Tool result is disallowed to be reported.' }],
               isError: true,
@@ -181,7 +186,9 @@ export class Loop {
           toolCall.result = result;
         } catch (error) {
           const errorMessage = `Error while executing tool "${name}": ${error instanceof Error ? error.message : String(error)}\n\nPlease try to recover and complete the task.`;
-          await options.onToolCallError?.({ assistantMessage, toolCall, error });
+          const status = await options.onToolCallError?.({ assistantMessage, toolCall, error });
+          if (status === 'break')
+            return { status: 'break', usage: totalUsage, turns };
 
           toolCall.result = {
             content: [{ type: 'text', text: errorMessage }],
