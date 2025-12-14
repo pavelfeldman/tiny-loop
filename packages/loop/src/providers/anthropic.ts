@@ -21,7 +21,7 @@ export class Anthropic implements types.Provider {
   readonly name = 'anthropic';
 
   async complete(conversation: types.Conversation, options: types.CompletionOptions) {
-    const maxTokens = Math.min(options.maxTokens ?? 32768, 32768);
+    const maxTokens = Math.min(options.maxTokens ?? 32_768, 32_768);
     const response = await create({
       model: options.model,
       max_tokens: maxTokens,

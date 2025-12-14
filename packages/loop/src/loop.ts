@@ -25,12 +25,12 @@ export type LoopEvents = {
   onBeforeTurn?: (params: {
     conversation: types.Conversation;
     totalUsage: types.Usage;
-    budgetTokens: number;
+    budgetTokens?: number;
   }) => PromiseOrValue<'continue' | 'break' | void>;
   onAfterTurn?: (params: {
     assistantMessage: types.AssistantMessage;
     totalUsage: types.Usage;
-    budgetTokens: number;
+    budgetTokens?: number;
   }) => PromiseOrValue<'continue' | 'break' | void>;
   onBeforeToolCall?: (params: {
     assistantMessage: types.AssistantMessage;
@@ -93,14 +93,14 @@ export class Loop {
     };
 
     const debug = options.debug;
-    let budgetTokens = options.maxTokens ?? 100_000;
+    let budgetTokens = options.maxTokens;
     const totalUsage: types.Usage = { input: 0, output: 0 };
 
     debug?.('lowire:loop')(`Starting ${this._provider.name} loop`, task);
     const maxTurns = options.maxTurns || 100;
 
     for (let turns = 0; turns < maxTurns; ++turns) {
-      if (budgetTokens <= 0)
+      if (options.maxTokens && budgetTokens !== undefined && budgetTokens <= 0)
         throw new Error(`Budget tokens ${options.maxTokens} exhausted`);
 
       debug?.('lowire:loop')(`Turn ${turns + 1} of (max ${maxTurns})`);
@@ -125,7 +125,8 @@ export class Loop {
 
       totalUsage.input += usage.input;
       totalUsage.output += usage.output;
-      budgetTokens -= usage.input + usage.output;
+      if (budgetTokens !== undefined)
+        budgetTokens -= usage.input + usage.output;
 
       debug?.('lowire:loop')('Usage', `input: ${usage.input}, output: ${usage.output}`);
       debug?.('lowire:loop')('Assistant', intent, JSON.stringify(assistantMessage.content, null, 2));
